@@ -5,6 +5,7 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.SPM {
+    static let Kingfisher = TargetDependency.external(name: "Kingfisher")
     static let TCACoordinators = TargetDependency.external(name: "TCACoordinators")
     static let ComposableArchitecture = TargetDependency.external(name: "ComposableArchitecture")
     static let Swinject = TargetDependency.external(name: "Swinject")
