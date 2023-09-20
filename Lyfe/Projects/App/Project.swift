@@ -26,7 +26,9 @@ let targets: [Target] = [
         sources: ["Sources/**"],
         resources: ["Resources/**"],
         scripts: scripts,
-        dependencies: [],
+        dependencies: ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) }
+        + ModulePaths.Domain.allCases.map { TargetDependency.domain(target: $0) }
+        + [],
         settings: .settings(base: env.baseSetting)
     )
 ]

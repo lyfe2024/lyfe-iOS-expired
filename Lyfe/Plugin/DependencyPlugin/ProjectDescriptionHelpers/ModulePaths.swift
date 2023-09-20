@@ -69,3 +69,7 @@ public extension MicroTargetPathConvertable where Self: RawRepresentable {
         "\(self.rawValue)\(type.rawValue)"
     }
 }
+
+// MARK: - For DI
+extension ModulePaths.Feature: CaseIterable {}
+extension ModulePaths.Domain: CaseIterable {}
