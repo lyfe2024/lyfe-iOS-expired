@@ -1,0 +1,35 @@
+import DependencyPlugin
+import ProjectDescription
+import ProjectDescriptionHelpers
+
+let name = ModulePaths.Core.Networking.rawValue
+
+let configurations: [Configuration] = generateEnvironment == .ci
+? .default
+: [
+    .debug(name: .dev, xcconfig: .relativeToXCConfig(type: .dev, name: name)),
+    .debug(name: .stage, xcconfig: .relativeToXCConfig(type: .stage, name: name)),
+    .release(name: .prod, xcconfig: .relativeToXCConfig(type: .prod, name: name))
+]
+
+let project = Project.module(
+    name: ModulePaths.Core.Networking.rawValue,
+    targets: [
+        .interface(
+            module: .core(.Networking),
+            spec: .init(
+                infoPlist: .extendingDefault(with: ["BASE_URL": .string("$(BASE_URL)")]),
+                settings: .settings(configurations: configurations, defaultSettings: .recommended)
+            )
+        ),
+        .implements(module: .core(.Networking), dependencies: [
+            .core(target: .Networking, type: .interface)
+        ]),
+        .testing(module: .core(.Networking), dependencies: [
+            .core(target: .Networking, type: .interface)
+        ]),
+        .tests(module: .core(.Networking), dependencies: [
+            .core(target: .Networking)
+        ])
+    ]
+)
