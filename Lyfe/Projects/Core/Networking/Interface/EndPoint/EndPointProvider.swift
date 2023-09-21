@@ -25,6 +25,9 @@ public protocol EndPointProvider {
     var queryItems: [URLQueryItem]? { get }
     var body: [String: Any]? { get }
     var mockFile: String? { get }
+    
+    var multipart: MultipartRequest? { get }
+    var uploadData: Data? { get }
 }
 
 extension EndPointProvider {
@@ -35,6 +38,14 @@ extension EndPointProvider {
     var baseURL: String {
         let baseURL = Bundle.module.object(forInfoDictionaryKey: "BASE_URL") as? String ?? ""
         return "\(baseURL)/"
+    }
+    
+    var multipart: MultipartRequest? {
+        return nil
+    }
+    
+    var uploadData: Data? {
+        return nil
     }
 
     func asURLRequest() throws -> URLRequest {
@@ -47,7 +58,7 @@ extension EndPointProvider {
             urlComponents.queryItems = queryItems
         }
         guard let url = urlComponents.url else {
-            throw ApiError(errorCode: "ERROR-0", message: "URL error")
+            throw APIError(errorCode: "ERROR-0", message: "URL error")
         }
 
         var urlRequest = URLRequest(url: url)
@@ -63,9 +74,16 @@ extension EndPointProvider {
             do {
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
             } catch {
-                throw ApiError(errorCode: "ERROR-0", message: "Error encoding http body")
+                throw APIError(errorCode: "ERROR-0", message: "Error encoding http body")
             }
         }
+        
+        if let multipart = multipart {
+            urlRequest.setValue(multipart.headerValue, forHTTPHeaderField: "Content-Type")
+            urlRequest.setValue("\(multipart.length)", forHTTPHeaderField: "Content-Length")
+            urlRequest.httpBody = multipart.httpBody
+        }
+        
         return urlRequest
     }
 }
