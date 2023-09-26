@@ -1,41 +1,27 @@
 import ComposableArchitecture
 import Foundation
 import SwiftUI
+import SplashFeature
 
-struct Screen: Reducer {
-    enum Action {
-        case home(HomeCore.Action)
+public struct Screen: Reducer {
+    public enum Action {
+        case splash(SplashCore.Action)
     }
     
-    enum State: Equatable, Identifiable {
-        case home(HomeCore.State)
+    public enum State: Equatable, Identifiable {
+        case splash(SplashCore.State)
         
-        var id: UUID {
+        public var id: UUID {
             switch self {
-            case .home(let state):
+            case .splash(let state):
                 return state.id
             }
         }
     }
     
-    var body: some ReducerOf<Self> {
-        Scope(state: /State.home, action: /Action.home) {
-            HomeCore()
+    public var body: some ReducerOf<Self> {
+        Scope(state: /State.splash, action: /Action.splash) {
+            SplashCore()
         }
     }
-}
-
-// 예시
-struct HomeCore: Reducer {
-  struct State: Equatable {
-    let id = UUID()
-  }
-
-  enum Action {
-    case startTapped
-  }
-
-  var body: some ReducerOf<Self> {
-    EmptyReducer()
-  }
 }

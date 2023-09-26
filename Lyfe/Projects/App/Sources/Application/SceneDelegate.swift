@@ -1,4 +1,6 @@
 import UIKit
+import SwiftUI
+import SplashFeature
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -10,6 +12,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: scene)
+        let store = SplashCore()
+        let splashView = SplashView(
+            store: .init(initialState: SplashCore.State()) {
+                SplashCore()
+            }
+        )
+        window.rootViewController = UIHostingController(rootView: splashView)
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}
