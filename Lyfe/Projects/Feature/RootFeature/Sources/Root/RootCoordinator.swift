@@ -1,12 +1,13 @@
 import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
-import SplashFeature
 
 //public struct RootView: View {
 //
 //}
 public struct RootCoordinator: Reducer {
+    public init() {}
+    
     public enum DeepLink {
 
     }
@@ -15,6 +16,11 @@ public struct RootCoordinator: Reducer {
         case home
     }
     public struct State: Equatable {
+        public init(splash: SplashCore.State, selectedTab: Tab) {
+            self.splash = splash
+            self.selectedTab = selectedTab
+        }
+        
         static let initialState = State(
             splash: .init(),
             selectedTab: .home

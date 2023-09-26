@@ -1,10 +1,13 @@
 import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
-import SplashFeature
 
 public struct RootCoordinatorView: View {
     let store: StoreOf<RootCoordinator>
+    
+    public init(store: StoreOf<RootCoordinator>) {
+        self.store = store
+    }
     
     public var body: some View {
         WithViewStore(store, observe: \.selectedTab) { viewStore in
@@ -12,6 +15,14 @@ public struct RootCoordinatorView: View {
                 selection: viewStore.binding(get: { $0 }, send: RootCoordinator.Action.tabSelected)
             ) {
                 // TODO: Tab
+                VStack {
+                    Text("RootCoordinator")
+                }
+                .background {
+                    Color.white
+                    
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
     }

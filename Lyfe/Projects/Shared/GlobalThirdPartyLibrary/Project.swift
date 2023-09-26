@@ -8,7 +8,8 @@ let project = Project.module(
         .implements(module: .shared(.GlobalThirdPartyLibrary), product: .framework, dependencies: [
             .SPM.ComposableArchitecture,
             .SPM.Kingfisher,
-            .SPM.Swinject
+            .SPM.Swinject,
+            .SPM.TCACoordinators
         ])
     ]
 )

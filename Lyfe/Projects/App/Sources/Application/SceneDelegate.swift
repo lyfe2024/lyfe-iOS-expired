@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import SplashFeature
+import RootFeature
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,13 +13,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
-        let store = SplashCore()
-        let splashView = SplashView(
-            store: .init(initialState: SplashCore.State()) {
-                SplashCore()
+        let splashView = RootCoordinatorView(
+            store: .init(
+                initialState: RootCoordinator.State(
+                    splash: .init(),
+                    selectedTab: .home
+                )
+            ) {
+                RootCoordinator()
             }
         )
         window.rootViewController = UIHostingController(rootView: splashView)
+        window.makeKeyAndVisible()
         self.window = window
     }
 
