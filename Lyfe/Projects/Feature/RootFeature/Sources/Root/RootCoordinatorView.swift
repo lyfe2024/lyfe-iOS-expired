@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
+import DesignSystem
 
 public struct RootCoordinatorView: View {
     let store: StoreOf<RootCoordinator>
@@ -24,6 +25,9 @@ public struct RootCoordinatorView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .topBar(
+                centerView: { Text("It's Title") }
+            )
         }
     }
 }
