@@ -12,22 +12,96 @@ public struct RootCoordinatorView: View {
     
     public var body: some View {
         WithViewStore(store, observe: \.selectedTab) { viewStore in
-            TabView(
-                selection: viewStore.binding(get: { $0 }, send: RootCoordinator.Action.tabSelected)
-            ) {
-                // TODO: Tab
-                VStack {
-                    Text("RootCoordinator")
-                }
-                .background {
-                    Color.white
+            VStack(spacing: 0) {
+                TabView(selection: viewStore.binding(
+                    get: { $0 },
+                    send: RootCoordinator.Action.tabSelected
+                )) {
+                    Text(Constant.Tab.home.title)
+                        .tag(Constant.Tab.home)
                     
+                    Text(Constant.Tab.all.title)
+                        .tag(Constant.Tab.all)
+                    
+                    Text(Constant.Tab.write.title)
+                        .tag(Constant.Tab.write)
+                    
+                    Text(Constant.Tab.alarm.title)
+                        .tag(Constant.Tab.alarm)
+                    
+                    Text(Constant.Tab.profile.title)
+                        .tag(Constant.Tab.profile)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                Spacer()
+                
+                TabBar(selectedTab: viewStore.binding(
+                    get: { $0 },
+                    send: RootCoordinator.Action.tabSelected
+                ))
             }
             .topBar(
                 centerView: { Text("It's Title") }
             )
+            .ignoresSafeArea(edges: .bottom)
+        }
+    }
+}
+
+extension RootCoordinatorView {
+    // MARK: Custom UI
+    
+    struct TabBar: View {
+        @Binding var selectedTab: Constant.Tab
+        
+        var body: some View {
+            ZStack(alignment: .bottom) {
+                VStack(alignment: .center) {
+                    HStack(alignment: .center, spacing: 10) {
+                        ForEach((Constant.Tab.allCases), id: \.self){ item in
+                            Button{
+                                self.selectedTab = item
+                            } label: {
+                                TabItem(
+                                    title: item.title,
+                                    iconName: item.iconName,
+                                    isActive: item == self.selectedTab
+                                )
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 8)
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .frame(height: 70)
+            .background(.black)
+            .cornerRadius(24)
+            .padding(.horizontal, 20)
+        }
+    }
+    
+    struct TabItem: View {
+        var title: String
+        var iconName: String
+        var isActive: Bool
+        
+        var body: some View {
+            VStack(spacing: 2){
+                Image(self.iconName)
+                    .resizable()
+                    .renderingMode(.template)
+                    .foregroundColor(self.isActive ? .white : .black)
+                    .frame(width: 20, height: 20)
+                
+                Text(self.title)
+                    .font(.system(size: 14))
+                    .foregroundColor(self.isActive ? .black : .white)
+            }
+            .frame(height: 50)
+            .frame(minWidth: 54)
+            .background(self.isActive ? .white : .black.opacity(0.6))
+            .cornerRadius(8)
         }
     }
 }

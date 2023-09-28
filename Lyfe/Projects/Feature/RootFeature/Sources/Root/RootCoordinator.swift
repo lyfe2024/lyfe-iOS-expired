@@ -2,21 +2,11 @@ import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
 
-//public struct RootView: View {
-//
-//}
 public struct RootCoordinator: Reducer {
     public init() {}
     
-    public enum DeepLink {
-
-    }
-    
-    public enum Tab: Hashable {
-        case home
-    }
     public struct State: Equatable {
-        public init(splash: SplashCore.State, selectedTab: Tab) {
+        public init(splash: SplashCore.State, selectedTab: Constant.Tab) {
             self.splash = splash
             self.selectedTab = selectedTab
         }
@@ -28,14 +18,14 @@ public struct RootCoordinator: Reducer {
         
         var splash: SplashCore.State
         
-        var selectedTab: Tab
+        var selectedTab: Constant.Tab
     }
     
     public enum Action {
         case splash(SplashCore.Action)
         
-        case deeplinkOpened(DeepLink)
-        case tabSelected(Tab)
+        case deeplinkOpened(Constant.DeepLink)
+        case tabSelected(Constant.Tab)
     }
     
     public var body: some ReducerOf<Self> {
@@ -59,4 +49,3 @@ public struct RootCoordinator: Reducer {
         }
     }
 }
-
