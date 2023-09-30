@@ -11,14 +11,23 @@ public struct RootCoordinatorView: View {
     }
     
     public var body: some View {
-        WithViewStore(store, observe: \.selectedTab) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(spacing: 0) {
                 TabView(selection: viewStore.binding(
-                    get: { $0 },
+                    get: { $0.selectedTab },
                     send: RootCoordinator.Action.tabSelected
                 )) {
-                    Text(Constant.Tab.home.title)
-                        .tag(Constant.Tab.home)
+                    VStack {
+                        Text(Constant.Tab.home.title)
+                            
+                        Button {
+                            viewStore.send(.setToast)
+                        } label: {
+                            Text("Button Tap")
+                        }
+                    }
+                    .tag(Constant.Tab.home)
+                    
                     
                     Text(Constant.Tab.all.title)
                         .tag(Constant.Tab.all)
@@ -36,7 +45,7 @@ public struct RootCoordinatorView: View {
                 Spacer()
                 
                 TabBar(selectedTab: viewStore.binding(
-                    get: { $0 },
+                    get: { $0.selectedTab },
                     send: RootCoordinator.Action.tabSelected
                 ))
             }
@@ -44,6 +53,10 @@ public struct RootCoordinatorView: View {
                 centerView: { Text("It's Title") }
             )
             .ignoresSafeArea(edges: .bottom)
+            .toast(config: viewStore.binding(
+                get: \.toast,
+                send: RootCoordinator.Action.onToast
+            ))
         }
     }
 }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 extension View {
+    // MARK: TopBar
+    
     public func topBar<C, L, R>(
         centerView: @escaping (() -> C),
         leftView: @escaping (() -> L),
@@ -54,3 +56,4 @@ extension View {
         )
     }
 }
+

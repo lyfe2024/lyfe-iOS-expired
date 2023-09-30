@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
+import DesignSystem
 
 public struct RootCoordinator: Reducer {
     public init() {}
@@ -19,13 +20,18 @@ public struct RootCoordinator: Reducer {
         var splash: SplashCore.State
         
         var selectedTab: Constant.Tab
+        @BindingState var toast: Toast?
     }
     
-    public enum Action {
+    public enum Action: BindableAction, Equatable {
         case splash(SplashCore.Action)
         
         case deeplinkOpened(Constant.DeepLink)
         case tabSelected(Constant.Tab)
+        case setToast
+        case onToast(Toast?)
+        
+        case binding(BindingAction<State>)
     }
     
     public var body: some ReducerOf<Self> {
@@ -44,8 +50,21 @@ public struct RootCoordinator: Reducer {
                 break
             case .tabSelected(let tab):
                 state.selectedTab = tab
+            case .onToast(let toast):
+                state.toast = toast
+                return .none
+            case .setToast:
+                state.toast = .init(
+                    type: .error,
+                    title: "에러 토스트 테스트",
+                    message: "에러 토스트 테스트 메시지",
+                    direction: .bottom
+                )
+            case .binding:
+                return .none
             }
             return .none
         }
+        ._printChanges()
     }
 }
