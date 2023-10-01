@@ -116,7 +116,7 @@ struct ToastModifier: ViewModifier {
                 
             )
             .onChange(of: self.toast) { old, prev in
-                if let prev {
+                if prev != nil {
                     self.showToast()
                 }
             }

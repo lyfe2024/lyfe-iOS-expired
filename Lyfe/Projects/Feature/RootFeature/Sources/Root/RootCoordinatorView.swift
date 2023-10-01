@@ -17,13 +17,31 @@ public struct RootCoordinatorView: View {
                     get: { $0.selectedTab },
                     send: RootCoordinator.Action.tabSelected
                 )) {
-                    VStack {
+                    VStack(spacing: 20) {
                         Text(Constant.Tab.home.title)
-                            
+                        
                         Button {
-                            viewStore.send(.setToast)
+                            viewStore.send(.setToast(.error))
                         } label: {
-                            Text("Button Tap")
+                            Text("Error Toast")
+                        }
+                        
+                        Button {
+                            viewStore.send(.setToast(.warning))
+                        } label: {
+                            Text("Warning Toast")
+                        }
+                        
+                        Button {
+                            viewStore.send(.setToast(.info))
+                        } label: {
+                            Text("Info Toast")
+                        }
+                        
+                        Button {
+                            viewStore.send(.setToast(.success))
+                        } label: {
+                            Text("Success Toast")
                         }
                     }
                     .tag(Constant.Tab.home)

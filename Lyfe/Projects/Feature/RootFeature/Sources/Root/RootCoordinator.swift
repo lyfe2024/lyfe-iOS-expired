@@ -28,7 +28,7 @@ public struct RootCoordinator: Reducer {
         
         case deeplinkOpened(Constant.DeepLink)
         case tabSelected(Constant.Tab)
-        case setToast
+        case setToast(ToastStyle)
         case onToast(Toast?)
         
         case binding(BindingAction<State>)
@@ -53,18 +53,17 @@ public struct RootCoordinator: Reducer {
             case .onToast(let toast):
                 state.toast = toast
                 return .none
-            case .setToast:
+            case .setToast(let style):
                 state.toast = .init(
-                    type: .error,
-                    title: "에러 토스트 테스트",
-                    message: "에러 토스트 테스트 메시지",
-                    direction: .bottom
+                    type: style,
+                    title: "토스트 테스트 타이틀",
+                    message: "토스트 테스트 메시지",
+                    direction: .top
                 )
             case .binding:
                 return .none
             }
             return .none
         }
-        ._printChanges()
     }
 }
