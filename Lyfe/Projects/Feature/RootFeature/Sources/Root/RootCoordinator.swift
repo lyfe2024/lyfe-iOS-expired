@@ -2,22 +2,26 @@ import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
 import DesignSystem
+import ProfileFeature
 
 public struct RootCoordinator: Reducer {
     public init() {}
     
     public struct State: Equatable {
-        public init(splash: SplashCore.State, selectedTab: Constant.Tab) {
+        public init(splash: SplashCore.State, profile: ProfileCoordinator.State, selectedTab: Constant.Tab) {
             self.splash = splash
+            self.profile = profile
             self.selectedTab = selectedTab
         }
         
-        static let initialState = State(
+        public static let initialState = State(
             splash: .init(),
+            profile: .init(),
             selectedTab: .home
         )
         
         var splash: SplashCore.State
+        var profile: ProfileCoordinator.State
         
         var selectedTab: Constant.Tab
         @BindingState var toast: Toast?
@@ -25,6 +29,7 @@ public struct RootCoordinator: Reducer {
     
     public enum Action: BindableAction, Equatable {
         case splash(SplashCore.Action)
+        case profile(ProfileCoordinator.Action)
         
         case deeplinkOpened(Constant.DeepLink)
         case tabSelected(Constant.Tab)
@@ -45,6 +50,8 @@ public struct RootCoordinator: Reducer {
                     try await Task.sleep(nanoseconds: 1_000_000_000)
                     print("splash onAppear end")
                 }
+            case .profile:
+                return .none
             case .deeplinkOpened:
                 // TODO: Deeplink
                 break

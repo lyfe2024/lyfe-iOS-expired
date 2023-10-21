@@ -2,6 +2,7 @@ import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
 import DesignSystem
+import ProfileFeature
 
 public struct RootCoordinatorView: View {
     let store: StoreOf<RootCoordinator>
@@ -56,7 +57,10 @@ public struct RootCoordinatorView: View {
                     Text(Constant.Tab.alarm.title)
                         .tag(Constant.Tab.alarm)
                     
-                    Text(Constant.Tab.profile.title)
+                    ProfileCoordinatorView(store: self.store.scope(
+                        state: \.profile, 
+                        action: RootCoordinator.Action.profile
+                    ))
                         .tag(Constant.Tab.profile)
                 }
                 
@@ -67,9 +71,6 @@ public struct RootCoordinatorView: View {
                     send: RootCoordinator.Action.tabSelected
                 ))
             }
-            .topBar(
-                centerView: { Text("It's Title") }
-            )
             .ignoresSafeArea(edges: .bottom)
             .toast(config: viewStore.binding(
                 get: \.toast,

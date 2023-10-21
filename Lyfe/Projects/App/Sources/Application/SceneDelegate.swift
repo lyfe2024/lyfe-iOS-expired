@@ -15,10 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         let splashView = RootCoordinatorView(
             store: .init(
-                initialState: RootCoordinator.State(
-                    splash: .init(),
-                    selectedTab: .home
-                )
+                initialState: RootCoordinator.State.initialState
             ) {
                 RootCoordinator()
             }
