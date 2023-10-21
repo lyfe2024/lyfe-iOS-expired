@@ -20,6 +20,12 @@ public struct ProfileCoordinatorView: View {
                          action: ProfileScreen.Action.profile,
                          then: ProfileView.init
                     )
+                case .profileEdit:
+                    CaseLet(
+                        /ProfileScreen.State.profileEdit,
+                         action: ProfileScreen.Action.profileEdit,
+                         then: ProfileEditView.init
+                    )
                 }
             }
         }

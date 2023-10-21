@@ -16,9 +16,9 @@ struct ProfileEditView: View {
         .topBar(
             leftView: {  
                 Button {
-                    
+                    self.store.send(.dismiss)
                 } label: {
-                    Image("")
+                    DesignSystemAsset.arrowBack.swiftUIImage
                 }
             }
         )

@@ -43,6 +43,9 @@ public struct RootCoordinator: Reducer {
         Scope(state: \.splash, action: /Action.splash) {
             SplashCore()
         }
+        Scope(state: \.profile, action: /Action.profile) {
+            ProfileCoordinator()
+        }
         Reduce<State, Action> { state, action in
             switch action {
             case .splash(.onAppear):

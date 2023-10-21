@@ -11,7 +11,7 @@ public struct ProfileCoordinator: Reducer {
         
         public init() {
             self.routes = [
-                .root(.profile(.init()), embedInNavigationView: false)
+                .root(.profile(.init()), embedInNavigationView: true)
             ]
         }
     }
@@ -24,13 +24,21 @@ public struct ProfileCoordinator: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .routeAction(_, action: let action):
-                print(action)
-                break
+            case .routeAction(_, action: .profile(.pushProfileEdit)):
+                let profileEditState = ProfileEditCore.State.init()
+                state.routes.push(.profileEdit(profileEditState))
+            case .routeAction(_, action: .profileEdit(.dismiss)):
+                state.routes.goBack()
             case .updateRoutes(_):
+                break
+            default:
                 break
             }
             return .none
         }
+        .forEachRoute {
+            ProfileScreen()
+        }
+        ._printChanges()
     }
 }

@@ -11,7 +11,11 @@ struct ProfileView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            
+            Button {
+                self.store.send(.pushProfileEdit)
+            } label: {
+                Text("Push ProfileEdit")
+            }
         }
         .topBar(centerView: { Text("Profile") })
         .background(Color.white)
