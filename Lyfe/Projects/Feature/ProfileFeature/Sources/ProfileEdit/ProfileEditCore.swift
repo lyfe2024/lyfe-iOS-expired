@@ -1,7 +1,7 @@
 import ComposableArchitecture
 import Foundation
 
-public struct ProfileCore: Reducer {
+public struct ProfileEditCore: Reducer {
     public init() {}
     
     public struct State: Equatable {
