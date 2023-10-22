@@ -66,10 +66,13 @@ public struct RootCoordinatorView: View {
                 
                 Spacer()
                 
-                TabBar(selectedTab: viewStore.binding(
-                    get: { $0.selectedTab },
-                    send: RootCoordinator.Action.tabSelected
-                ))
+                if self.showTabBar(viewStore.selectedTab) {
+                    TabBar(selectedTab: viewStore.binding(
+                        get: { $0.selectedTab },
+                        send: RootCoordinator.Action.tabSelected
+                    ))
+                    .padding(.bottom, 40)
+                }
             }
             .ignoresSafeArea(edges: .bottom)
             .toast(config: viewStore.binding(
@@ -77,6 +80,13 @@ public struct RootCoordinatorView: View {
                 send: RootCoordinator.Action.onToast
             ))
         }
+    }
+    
+    func showTabBar(_ tab: Constant.Tab) -> Bool {
+        let isProfileRootPage = tab == .profile && self.store.withState(\.profile.routes).count > 1
+        if isProfileRootPage { return false }
+        
+        return true
     }
 }
 
