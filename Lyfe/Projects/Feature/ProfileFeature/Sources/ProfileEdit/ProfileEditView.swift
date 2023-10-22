@@ -10,9 +10,19 @@ struct ProfileEditView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 40) {
+            HStack {
+                Text("프로필 수정")
+                    .font(.system(size: 24, weight: .bold))
+                
+                Spacer()
+            }
             
+            LyfePhotosPicker()
+            
+            Spacer()
         }
+        .padding(.horizontal, 20)
         .topBar(
             leftView: {  
                 Button {
