@@ -1,7 +1,6 @@
 import ComposableArchitecture
 import Foundation
 import SwiftUI
-import SplashFeature
 
 public struct Screen: Reducer {
     public enum Action {
