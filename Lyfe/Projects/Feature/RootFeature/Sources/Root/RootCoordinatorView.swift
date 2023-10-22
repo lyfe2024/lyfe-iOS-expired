@@ -2,6 +2,7 @@ import ComposableArchitecture
 import SwiftUI
 import TCACoordinators
 import DesignSystem
+import ProfileFeature
 
 public struct RootCoordinatorView: View {
     let store: StoreOf<RootCoordinator>
@@ -56,26 +57,36 @@ public struct RootCoordinatorView: View {
                     Text(Constant.Tab.alarm.title)
                         .tag(Constant.Tab.alarm)
                     
-                    Text(Constant.Tab.profile.title)
+                    ProfileCoordinatorView(store: self.store.scope(
+                        state: \.profile, 
+                        action: RootCoordinator.Action.profile
+                    ))
                         .tag(Constant.Tab.profile)
                 }
                 
                 Spacer()
                 
-                TabBar(selectedTab: viewStore.binding(
-                    get: { $0.selectedTab },
-                    send: RootCoordinator.Action.tabSelected
-                ))
+                if self.showTabBar(viewStore.selectedTab) {
+                    TabBar(selectedTab: viewStore.binding(
+                        get: { $0.selectedTab },
+                        send: RootCoordinator.Action.tabSelected
+                    ))
+                    .padding(.bottom, 40)
+                }
             }
-            .topBar(
-                centerView: { Text("It's Title") }
-            )
             .ignoresSafeArea(edges: .bottom)
             .toast(config: viewStore.binding(
                 get: \.toast,
                 send: RootCoordinator.Action.onToast
             ))
         }
+    }
+    
+    func showTabBar(_ tab: Constant.Tab) -> Bool {
+        let isProfileRootPage = tab == .profile && self.store.withState(\.profile.routes).count > 1
+        if isProfileRootPage { return false }
+        
+        return true
     }
 }
 
