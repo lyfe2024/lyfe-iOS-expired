@@ -10,6 +10,7 @@ public struct ProfileEditCore: Reducer {
         public init() {}
         
         @BindingState var nickname: String = ""
+        var isEnabledDoneButton: Bool = false
     }
     
     public enum Action: Equatable, BindableAction {
@@ -26,6 +27,9 @@ public struct ProfileEditCore: Reducer {
                 return .none
             case .dismiss:
                 // handle by Coordinator
+                return .none
+            case .binding(\.$nickname):
+                state.isEnabledDoneButton = state.nickname.count > 0
                 return .none
             case .binding:
                 // Binding

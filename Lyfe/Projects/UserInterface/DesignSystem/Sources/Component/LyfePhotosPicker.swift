@@ -19,7 +19,7 @@ public struct LyfePhotosPicker: View {
                     .clipShape(Circle())
                 
             } else {
-                DesignSystemAsset.avatar.swiftUIImage
+                DesignSystemAsset.CommonAssets.avatar.swiftUIImage
             }
         }
         .overlay(alignment: .bottomTrailing) {

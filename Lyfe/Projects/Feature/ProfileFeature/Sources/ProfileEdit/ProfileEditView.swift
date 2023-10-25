@@ -29,7 +29,7 @@ struct ProfileEditView: View {
                 Button {
                     self.store.send(.binding(.set(\.$nickname, "")))
                 } label: {
-                    DesignSystemAsset.cancelMark.swiftUIImage
+                    DesignSystemAsset.CommonAssets.cancelMark.swiftUIImage
                         .resizable()
                         .frame(width: 32, height: 32)
                 }
@@ -45,6 +45,29 @@ struct ProfileEditView: View {
             )
             
             Spacer()
+            
+            Button {
+                
+            } label: {
+                Text("완료")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(
+                        self.store.withState(\.isEnabledDoneButton)
+                        ? Color.white
+                        : DesignSystemAsset.Color.gray003.swiftUIColor
+                    )
+                    .frame(height: 24)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+            }
+            .frame(maxWidth: .infinity)
+            .background(
+                self.store.withState(\.isEnabledDoneButton)
+                ? Color.black
+                : DesignSystemAsset.Color.gray001.swiftUIColor
+            )
+            .cornerRadius(10)
+            .padding(.bottom, 40)
         }
         .padding(.horizontal, 20)
         .topBar(
@@ -52,7 +75,7 @@ struct ProfileEditView: View {
                 Button {
                     self.store.send(.dismiss)
                 } label: {
-                    DesignSystemAsset.arrowBack.swiftUIImage
+                    DesignSystemAsset.CommonAssets.arrowBack.swiftUIImage
                 }
             }
         )

@@ -14,10 +14,8 @@ public struct RootCoordinatorView: View {
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(spacing: 0) {
-                TabView(selection: viewStore.binding(
-                    get: { $0.selectedTab },
-                    send: RootCoordinator.Action.tabSelected
-                )) {
+                switch viewStore.selectedTab {
+                case .home:
                     VStack(spacing: 20) {
                         Text(Constant.Tab.home.title)
                         
@@ -46,19 +44,18 @@ public struct RootCoordinatorView: View {
                         }
                     }
                     .tag(Constant.Tab.home)
-                    
-                    
+                case .all:
                     Text(Constant.Tab.all.title)
                         .tag(Constant.Tab.all)
-                    
+                case .write:
                     Text(Constant.Tab.write.title)
                         .tag(Constant.Tab.write)
-                    
+                case .alarm:
                     Text(Constant.Tab.alarm.title)
                         .tag(Constant.Tab.alarm)
-                    
+                case .profile:
                     ProfileCoordinatorView(store: self.store.scope(
-                        state: \.profile, 
+                        state: \.profile,
                         action: RootCoordinator.Action.profile
                     ))
                         .tag(Constant.Tab.profile)
@@ -75,10 +72,6 @@ public struct RootCoordinatorView: View {
                 }
             }
             .ignoresSafeArea(edges: .bottom)
-            .toast(config: viewStore.binding(
-                get: \.toast,
-                send: RootCoordinator.Action.onToast
-            ))
         }
     }
     
