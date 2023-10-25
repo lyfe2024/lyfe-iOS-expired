@@ -20,6 +20,30 @@ struct ProfileEditView: View {
             
             LyfePhotosPicker()
             
+            HStack(spacing: 8) {
+                TextField("placeholder", text: .init(
+                    get: { self.store.withState(\.nickname) },
+                    set: { self.store.send(.binding(.set(\.$nickname, $0))) }
+                ))
+                
+                Button {
+                    self.store.send(.binding(.set(\.$nickname, "")))
+                } label: {
+                    DesignSystemAsset.cancelMark.swiftUIImage
+                        .resizable()
+                        .frame(width: 32, height: 32)
+                }
+            }
+            .padding(.leading, 12)
+            .padding(.trailing, 8)
+            .padding(.vertical, 8)
+            .cornerRadius(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .inset(by: 0.5)
+                    .stroke(Color(red: 0.21, green: 0.21, blue: 0.21), lineWidth: 1)
+            )
+            
             Spacer()
         }
         .padding(.horizontal, 20)
