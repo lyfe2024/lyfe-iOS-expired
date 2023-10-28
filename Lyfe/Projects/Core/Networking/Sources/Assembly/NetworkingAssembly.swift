@@ -16,8 +16,8 @@ public final class NetworkingAssembly: Assembly {
     public func assemble(container: Container) {
         
         // MARK: APIClient
-        container.register(APIProtocol.self) { _ in
-            APIClient()
-        }
+//        container.register(APIProtocol.self) { _ in
+//            APIClient()
+//        }
     }
 }

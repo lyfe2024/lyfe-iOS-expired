@@ -9,8 +9,8 @@ public struct ProfileEditCore: Reducer {
         
         public init() {}
         
-        @BindingState var nickname: String = ""
-        var isEnabledDoneButton: Bool = false
+        @BindingState public var nickname: String = ""
+        public var isEnabledDoneButton: Bool = false
     }
     
     public enum Action: Equatable, BindableAction {
