@@ -9,6 +9,9 @@ struct ProfileEditView: View {
         self.store = store
     }
     
+    @State var profileImage: Image?
+    @State var profileImageData: Data?
+    
     var body: some View {
         VStack(alignment: .center, spacing: 40) {
             HStack {
@@ -18,7 +21,25 @@ struct ProfileEditView: View {
                 Spacer()
             }
             
-            LyfePhotosPicker()
+            LyfePhotosPicker(
+                image: self.$profileImage,
+                imageData: .init(
+                    get: { self.store.withState(\.profileImageData) },
+                    set: { self.store.send(.loadProfileImageData($0)) }
+                ),
+                view: {
+                    VStack {
+                        if let profileImage {
+                            profileImage
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                                .clipShape(Circle())
+                        } else {
+                            DesignSystemAsset.CommonAssets.avatar.swiftUIImage
+                        }
+                    }
+                }
+            )
             
             HStack(spacing: 8) {
                 TextField("placeholder", text: .init(
