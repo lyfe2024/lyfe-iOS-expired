@@ -1,29 +1,25 @@
 import SwiftUI
 import PhotosUI
 
-public struct LyfePhotosPicker: View {
-    @State private var selectedPhoto: PhotosPickerItem?
-    @State private var image: Image?
+public struct LyfePhotosPicker<V>: View where V: View {
+    @State private var selectedPhoto: PhotosPickerItem? = nil
+    @Binding private var image: Image?
+    @Binding private var imageData: Data?
+    var view: (() -> V)?
     
-    public init(selectedPhoto: PhotosPickerItem? = nil, image: Image? = nil) {
-        self.selectedPhoto = selectedPhoto
-        self.image = image
+    public init(
+        image: Binding<Image?>,
+        imageData: Binding<Data?>,
+        view: (() -> V)? = nil
+    ) {
+        self._image = image
+        self._imageData = imageData
+        self.view = view
     }
     
     public var body: some View {
         PhotosPicker(selection: self.$selectedPhoto) {
-            if let image {
-                image
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .clipShape(Circle())
-                
-            } else {
-                DesignSystemAsset.CommonAssets.avatar.swiftUIImage
-            }
-        }
-        .overlay(alignment: .bottomTrailing) {
-            Image("")
+            self.view?()
         }
         .task(id: self.selectedPhoto) {
             let data = try? await self.selectedPhoto?.loadTransferable(type: Data.self)
