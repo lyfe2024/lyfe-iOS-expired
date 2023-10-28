@@ -25,6 +25,7 @@ public struct LyfePhotosPicker<V>: View where V: View {
             let data = try? await self.selectedPhoto?.loadTransferable(type: Data.self)
             if let data, let uiImage = UIImage(data: data) {
                 self.image = Image(uiImage: uiImage.fixedOrientation)
+                self.imageData = data
             }
         }
     }
