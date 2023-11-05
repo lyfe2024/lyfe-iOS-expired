@@ -36,11 +36,12 @@ struct NicknameView: View {
                         set: { self.store.send(.binding(.set(\.$name, $0))) }
                     ))
                     .frame( height: 48)
+                    .padding(.leading, 12)
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .inset(by: 0.5)
-                            .stroke(Color(red: 0.21, green: 0.21, blue: 0.21), lineWidth: 1)
+                            .stroke(store.withState(\.isInput) ? Color.black : DesignSystemAsset.Color.gray002.swiftUIColor, lineWidth: 1)
                     )
                     
                     HStack() {
@@ -53,8 +54,8 @@ struct NicknameView: View {
                                 .resizable()
                                 .frame(width: 32, height: 32)
                         }
-                        .padding(.trailing, 28)
-    //                    .opacity(self.store.withState(\.isEnableThird) ? 1 : 0)
+                        .padding(.trailing, 8)
+                        .opacity(self.store.withState(\.isInput) ? 1 : 0)
                     }
                 }
                 .padding(.top, 72)

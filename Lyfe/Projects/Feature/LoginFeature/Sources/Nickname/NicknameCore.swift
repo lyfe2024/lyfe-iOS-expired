@@ -18,7 +18,6 @@ public struct NicknameCore: Reducer {
         public init() {}
         
         @BindingState public var name: String = ""
-        public var isFoucusTextFiled: Bool = false
         public var isInput: Bool = false
         public var isEnableFirst: Bool = false
         public var isEnableSecond: Bool = false
@@ -29,7 +28,6 @@ public struct NicknameCore: Reducer {
     public enum Action: BindableAction, Equatable {
         case onAppear
         case dismiss
-        case focusTextFiled
         case binding(BindingAction<State>)
         case clear
     }
