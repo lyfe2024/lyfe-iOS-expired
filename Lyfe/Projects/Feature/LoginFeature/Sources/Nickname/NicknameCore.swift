@@ -18,6 +18,8 @@ public struct NicknameCore: Reducer {
         public init() {}
         
         @BindingState public var name: String = ""
+        public var isFoucusTextFiled: Bool = false
+        public var isInput: Bool = false
         public var isEnableFirst: Bool = false
         public var isEnableSecond: Bool = false
         public var isEnableThird: Bool = false
@@ -27,6 +29,7 @@ public struct NicknameCore: Reducer {
     public enum Action: BindableAction, Equatable {
         case onAppear
         case dismiss
+        case focusTextFiled
         case binding(BindingAction<State>)
         case clear
     }
@@ -54,12 +57,13 @@ public struct NicknameCore: Reducer {
             case .dismiss:
                 return .none
             case .binding(\.$name):
-//                state.isEnableFirst = hasCharacters(nickname: state.nickname)
-//                state.isEnableSecond = hasCharacters(nickname: state.nickname)
+                state.isInput = state.name.count > 0
+                state.isEnableFirst = hasCharacters(name: state.name)
+                state.isEnableSecond = hasCharacters(name: state.name)
                 if (state.name.count > 0 && state.name.count < 11) {
                     state.isEnableThird = true
                 }
-//                state.isEnableDoneButton = state.isEnableFirst && state.isEnableSecond && state.isEnableThird
+                state.isEnableDoneButton = state.isEnableFirst && state.isEnableSecond && state.isEnableThird
                 return .none
             case .binding:
                 return .none
