@@ -39,3 +39,4 @@ public struct LoginCoordinatorView: View {
         }
     }
 }
+
