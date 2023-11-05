@@ -9,13 +9,17 @@ public struct ProfileEditCore: Reducer {
         
         public init() {}
         
-        @BindingState var nickname: String = ""
-        var isEnabledDoneButton: Bool = false
+        @BindingState public var nickname: String = ""
+        public var isEnabledDoneButton: Bool = false
+        public var profileImageData: Data?
     }
     
     public enum Action: Equatable, BindableAction {
         case onAppear
         case dismiss
+        
+        case loadProfileImageData(Data?)
+        
         case binding(BindingAction<State>)
     }
     
@@ -28,6 +32,11 @@ public struct ProfileEditCore: Reducer {
             case .dismiss:
                 // handle by Coordinator
                 return .none
+                
+            case .loadProfileImageData(let data):
+                state.profileImageData = data
+                return .none
+                
             case .binding(\.$nickname):
                 state.isEnabledDoneButton = state.nickname.count > 0
                 return .none
