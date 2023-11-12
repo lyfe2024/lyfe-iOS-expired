@@ -19,5 +19,9 @@ let project = Project.module(
             .userInterface(target: .DesignSystem)
         ])
     ],
-    resourceSynthesizers: .default
+    resourceSynthesizers: [
+        .strings(),
+        .fonts(),
+        .custom(name: "Assets", parser: .assets, extensions: ["xcassets"])
+    ]
 )
