@@ -35,7 +35,7 @@ struct ProfileEditView: View {
                                 .frame(width: 80, height: 80)
                                 .clipShape(Circle())
                         } else {
-                            DesignSystemAsset.CommonAssets.avatar.swiftUIImage
+                            R.Common.avatar
                         }
                     }
                 }
@@ -50,7 +50,7 @@ struct ProfileEditView: View {
                 Button {
                     self.store.send(.binding(.set(\.$nickname, "")))
                 } label: {
-                    DesignSystemAsset.CommonAssets.cancelMark.swiftUIImage
+                    R.Common.cancelMark
                         .resizable()
                         .frame(width: 32, height: 32)
                 }
@@ -75,7 +75,7 @@ struct ProfileEditView: View {
                     .foregroundColor(
                         self.store.withState(\.isEnabledDoneButton)
                         ? Color.white
-                        : DesignSystemAsset.Color.gray003.swiftUIColor
+                        : R.Color.grey300
                     )
                     .frame(height: 24)
                     .padding(.horizontal, 24)
@@ -85,7 +85,7 @@ struct ProfileEditView: View {
             .background(
                 self.store.withState(\.isEnabledDoneButton)
                 ? Color.black
-                : DesignSystemAsset.Color.gray001.swiftUIColor
+                : R.Color.grey100
             )
             .cornerRadius(10)
             .padding(.bottom, 40)
@@ -96,7 +96,7 @@ struct ProfileEditView: View {
                 Button {
                     self.store.send(.dismiss)
                 } label: {
-                    DesignSystemAsset.CommonAssets.arrowBack.swiftUIImage
+                    R.Common.arrowBack
                 }
             }
         )
