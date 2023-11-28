@@ -6,31 +6,25 @@ struct BottomTabBar: View {
     @Binding var selectedTab: Constant.Tab
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack(alignment: .center) {
-                HStack(alignment: .center, spacing: 10) {
-                    
-                    ForEach(Constant.Tab.allCases, id: \.self) { item in
-                        let isActive = item == self.selectedTab
-                        
-                        Button{
-                            self.selectedTab = item
-                        } label: {
-                            BottomTabItem(
-                                tab: item,
-                                isActive: isActive
-                            )
-                        }
-                    }
+        HStack {
+            ForEach(Constant.Tab.allCases, id: \.self) { item in
+                let isActive = item == self.selectedTab
+                
+                Button{
+                    self.selectedTab = item
+                } label: {
+                    BottomTabItem(
+                        tab: item,
+                        isActive: isActive
+                    )
                 }
-                .padding(.horizontal, 8)
             }
-            .frame(maxWidth: .infinity)
         }
-        .frame(height: 70)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
         .background(R.Color.grey900)
-        .cornerRadius(24)
-        .padding(.horizontal, 20)
+        .cornerRadius(20)
     }
 }
 

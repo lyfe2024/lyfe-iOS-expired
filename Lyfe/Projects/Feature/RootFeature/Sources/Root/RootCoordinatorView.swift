@@ -61,17 +61,16 @@ public struct RootCoordinatorView: View {
                         .tag(Constant.Tab.profile)
                 }
                 
-                Spacer()
-                
                 if self.showTabBar(viewStore.selectedTab) {
+                    Spacer()
+                    
                     BottomTabBar(selectedTab: viewStore.binding(
                         get: { $0.selectedTab },
                         send: RootCoordinator.Action.tabSelected
                     ))
-                    .padding(.bottom, 40)
+                    .padding(.horizontal, 20)
                 }
             }
-            .ignoresSafeArea(edges: .bottom)
         }
     }
     
