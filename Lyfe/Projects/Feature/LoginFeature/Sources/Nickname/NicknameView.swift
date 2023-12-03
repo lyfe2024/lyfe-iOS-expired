@@ -41,7 +41,7 @@ struct NicknameView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .inset(by: 0.5)
-                            .stroke(store.withState(\.isInput) ? Color.black : DesignSystemAsset.Color.gray002.swiftUIColor, lineWidth: 1)
+                            .stroke(store.withState(\.isInput) ? Color.black : R.Color.grey200, lineWidth: 1)
                     )
                     
                     HStack() {
@@ -50,7 +50,7 @@ struct NicknameView: View {
                         Button {
                             self.store.send(.clear)
                         } label: {
-                            DesignSystemAsset.CommonAssets.cancelMark.swiftUIImage
+                            R.Common.cancelMark
                                 .resizable()
                                 .frame(width: 32, height: 32)
                         }
@@ -62,40 +62,40 @@ struct NicknameView: View {
             
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 12) {
-                    DesignSystemAsset.CommonAssets.checkMark.swiftUIImage
+                    R.Common.checkMark
                         .resizable()
                         .frame(width: 16, height: 16)
-                        .foregroundColor(store.withState(\.isEnableFirst) ? DesignSystemAsset.Color.blue001.swiftUIColor : DesignSystemAsset.Color.gray002.swiftUIColor)
+                        .foregroundColor(store.withState(\.isEnableFirst) ? R.Color.black : R.Color.grey200)
                     
                     Text("영문/한글 + 숫자조합")
                         .font(Font.system(size: 14))
-                        .foregroundColor(store.withState(\.isEnableFirst) ? DesignSystemAsset.Color.blue001.swiftUIColor : DesignSystemAsset.Color.gray002.swiftUIColor)
+                        .foregroundColor(store.withState(\.isEnableFirst) ? R.Color.black : R.Color.grey200)
                     
                     Spacer()
                 }
                 
                 HStack(spacing: 12) {
-                    DesignSystemAsset.CommonAssets.checkMark.swiftUIImage
+                    R.Common.checkMark
                         .resizable()
                         .frame(width: 16, height: 16)
-                        .foregroundColor(store.withState(\.isEnableSecond) ? DesignSystemAsset.Color.blue001.swiftUIColor : DesignSystemAsset.Color.gray002.swiftUIColor)
+                        .foregroundColor(store.withState(\.isEnableSecond) ? R.Color.black : R.Color.grey200)
                     
                     Text("특수문자 사용 X")
                         .font(Font.system(size: 14))
-                        .foregroundColor(store.withState(\.isEnableSecond) ? DesignSystemAsset.Color.blue001.swiftUIColor : DesignSystemAsset.Color.gray002.swiftUIColor)
+                        .foregroundColor(store.withState(\.isEnableSecond) ? R.Color.black : R.Color.grey200)
                     
                     Spacer()
                 }
                 
                 HStack(spacing: 12) {
-                    DesignSystemAsset.CommonAssets.checkMark.swiftUIImage
+                    R.Common.checkMark
                         .resizable()
                         .frame(width: 16, height: 16)
-                        .foregroundColor(store.withState(\.isEnableThird) ? DesignSystemAsset.Color.blue001.swiftUIColor : DesignSystemAsset.Color.gray002.swiftUIColor)
+                        .foregroundColor(store.withState(\.isEnableThird) ? R.Color.black : R.Color.grey200)
                     
                     Text("최대 10글자")
                         .font(Font.system(size: 14))
-                        .foregroundColor(store.withState(\.isEnableThird) ? DesignSystemAsset.Color.blue001.swiftUIColor : DesignSystemAsset.Color.gray002.swiftUIColor)
+                        .foregroundColor(store.withState(\.isEnableThird) ? R.Color.black : R.Color.grey200)
                     
                     Spacer()
                 }
@@ -111,7 +111,7 @@ struct NicknameView: View {
                     .foregroundColor(
                         self.store.withState(\.isEnableDoneButton)
                         ? Color.white
-                        : DesignSystemAsset.Color.gray003.swiftUIColor
+                        : R.Color.grey300
                     )
                     .frame(height: 24)
                     .padding(.horizontal, 24)
@@ -121,7 +121,7 @@ struct NicknameView: View {
             .background(
                 self.store.withState(\.isEnableDoneButton)
                 ? Color.black
-                : DesignSystemAsset.Color.gray001.swiftUIColor
+                : R.Color.grey100
             )
             .cornerRadius(10)
             .padding(.bottom, 40)
@@ -131,7 +131,7 @@ struct NicknameView: View {
             Button {
                 store.send(.dismiss)
             } label: {
-                DesignSystemAsset.CommonAssets.arrowBack.swiftUIImage
+                R.Common.arrowBack
             }
         })
     }
