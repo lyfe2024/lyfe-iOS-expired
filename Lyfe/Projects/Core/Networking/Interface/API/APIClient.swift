@@ -10,6 +10,8 @@ import Foundation
 
 public final class APIClient: APIProtocol {
     
+    public init() {}
+    
     var session: URLSession {
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true

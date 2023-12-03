@@ -30,7 +30,7 @@ public protocol EndPointProvider {
     var uploadData: Data? { get }
 }
 
-extension EndPointProvider {
+public extension EndPointProvider {
     var scheme: String {
         return "https"
     }
@@ -90,7 +90,7 @@ extension EndPointProvider {
 
 private class BundleFinder {}
 
-extension Foundation.Bundle {
+public extension Foundation.Bundle {
     /// Since Lyfe is a application, the bundle for classes within this module can be used directly.
     static let module = Bundle(for: BundleFinder.self)
 }
