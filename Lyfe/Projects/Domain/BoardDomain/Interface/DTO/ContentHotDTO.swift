@@ -1,12 +1,8 @@
-import BaseDomainInterface
 import Foundation
-
-extension BoardsDTO {
-    public enum Content {}
-}
+import BaseDomainInterface
 
 extension BoardsDTO.Content {
-    public struct LatestResponse: Decodable {
+    public struct HotResponse: Decodable {
         public let result: [BoardContentList]
         public let page: Page
     }
