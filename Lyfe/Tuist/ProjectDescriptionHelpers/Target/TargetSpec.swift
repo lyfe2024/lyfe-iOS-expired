@@ -73,7 +73,13 @@ public struct TargetSpec: Configurable {
     }
 
     func toTarget(with name: String, product: Product? = nil) -> Target {
-        Target(
+        var _entitlements: Entitlements? = nil
+        
+        if let entitlements = entitlements {
+            _entitlements = .file(path: entitlements)
+        }
+        
+        return Target(
             name: name,
             platform: platform,
             product: product ?? self.product,
@@ -85,7 +91,7 @@ public struct TargetSpec: Configurable {
             resources: resources,
             copyFiles: copyFiles,
             headers: headers,
-            entitlements: entitlements,
+            entitlements: _entitlements,
             scripts: scripts,
             dependencies: dependencies,
             settings: settings ?? .settings(
