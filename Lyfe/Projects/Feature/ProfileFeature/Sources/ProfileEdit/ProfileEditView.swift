@@ -12,6 +12,8 @@ struct ProfileEditView: View {
     @State var profileImage: Image?
     @State var profileImageData: Data?
     
+    @FocusState var focusState: FocusField?
+    
     var body: some View {
         VStack(alignment: .center, spacing: 40) {
             HStack {
@@ -28,7 +30,7 @@ struct ProfileEditView: View {
                     set: { self.store.send(.loadProfileImageData($0)) }
                 ),
                 view: {
-                    VStack {
+                    ZStack {
                         if let profileImage {
                             profileImage
                                 .resizable()
@@ -38,31 +40,29 @@ struct ProfileEditView: View {
                             R.Common.avatar
                         }
                     }
+                    .padding(8)
+                    .overlay(alignment: .bottomTrailing) {
+                        R.Common.addCircleFill
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundStyle(R.Color.mainPrimary500)
+                            .frame(width: 24, height: 24)
+                    }
                 }
             )
             
-            HStack(spacing: 8) {
-                TextField("placeholder", text: .init(
+            NicknameSection(
+                text: .init(
                     get: { self.store.withState(\.nickname) },
                     set: { self.store.send(.binding(.set(\.$nickname, $0))) }
-                ))
-                
-                Button {
-                    self.store.send(.binding(.set(\.$nickname, "")))
-                } label: {
-                    R.Common.cancelMark
-                        .resizable()
-                        .frame(width: 32, height: 32)
-                }
-            }
-            .padding(.leading, 12)
-            .padding(.trailing, 8)
-            .padding(.vertical, 8)
-            .cornerRadius(8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .inset(by: 0.5)
-                    .stroke(Color(red: 0.21, green: 0.21, blue: 0.21), lineWidth: 1)
+                ),
+                placeholder: "닉네임을 입력해주세요.",
+                focusState: self._focusState,
+                validList: [
+                    .init(status: .success, text: "1"),
+                    .init(status: .default, text: "2"),
+                    .init(status: .failure, text: "3"),
+                ]
             )
             
             Spacer()
@@ -102,5 +102,28 @@ struct ProfileEditView: View {
         )
         .background(Color.white)
         .ignoresSafeArea(edges: .bottom)
+    }
+}
+
+extension ProfileEditView {
+    
+    struct NicknameSection: View {
+        @Binding var text: String
+        var placeholder: String
+        @FocusState var focusState: FocusField?
+        
+        var validList: [ValidInfo]
+        
+        var body: some View {
+            VStack(spacing: 8) {
+                DefaultTextField(
+                    text: self.$text,
+                    placeholder: self.placeholder,
+                    focusState: self._focusState
+                )
+                
+                ValidationView(list: self.validList)
+            }
+        }
     }
 }
