@@ -10,19 +10,14 @@ import Foundation
 import SwiftUI
 
 public struct DefaultTextField: View {
-    public enum Field {
-        case on
-        case off
-        case error
-    }
     @Binding var text: String
     var placeholder: String
-    @FocusState var focusState: Field?
+    @FocusState var focusState: FocusField?
     
     public init(
         text: Binding<String>,
         placeholder: String,
-        focusState: FocusState<Field?>
+        focusState: FocusState<FocusField?>
     ) {
         self._text = text
         self.placeholder = placeholder
