@@ -10,11 +10,11 @@ import Foundation
 import SwiftUI
 
 public struct DefaultLabel: View {
-    @Binding var status: ViewStatus
+    var status: ViewStatus
     var text: String
     
-    public init(status: Binding<ViewStatus>, text: String) {
-        self._status = status
+    public init(status: ViewStatus, text: String) {
+        self.status = status
         self.text = text
     }
     

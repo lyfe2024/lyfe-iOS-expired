@@ -12,7 +12,7 @@ struct ProfileEditView: View {
     @State var profileImage: Image?
     @State var profileImageData: Data?
     
-    @FocusState var focusState: DefaultTextField.Field?
+    @FocusState var focusState: FocusField?
     
     var body: some View {
         VStack(alignment: .center, spacing: 40) {
@@ -45,18 +45,24 @@ struct ProfileEditView: View {
                         R.Common.addCircleFill
                             .resizable()
                             .renderingMode(.template)
+                            .foregroundStyle(R.Color.mainPrimary500)
                             .frame(width: 24, height: 24)
                     }
                 }
             )
             
-            DefaultTextField(
+            NicknameSection(
                 text: .init(
                     get: { self.store.withState(\.nickname) },
                     set: { self.store.send(.binding(.set(\.$nickname, $0))) }
                 ),
                 placeholder: "닉네임을 입력해주세요.",
-                focusState: self._focusState
+                focusState: self._focusState,
+                validList: [
+                    .init(status: .success, text: "1"),
+                    .init(status: .default, text: "2"),
+                    .init(status: .failure, text: "3"),
+                ]
             )
             
             Spacer()
@@ -96,5 +102,28 @@ struct ProfileEditView: View {
         )
         .background(Color.white)
         .ignoresSafeArea(edges: .bottom)
+    }
+}
+
+extension ProfileEditView {
+    
+    struct NicknameSection: View {
+        @Binding var text: String
+        var placeholder: String
+        @FocusState var focusState: FocusField?
+        
+        var validList: [ValidInfo]
+        
+        var body: some View {
+            VStack(spacing: 8) {
+                DefaultTextField(
+                    text: self.$text,
+                    placeholder: self.placeholder,
+                    focusState: self._focusState
+                )
+                
+                ValidationView(list: self.validList)
+            }
+        }
     }
 }
