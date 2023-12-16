@@ -1,9 +1,12 @@
 import ComposableArchitecture
 import DesignSystem
+import CoreKit
 import Foundation
 
 public struct ProfileEditCore: Reducer {
     public init() {}
+    
+    @Dependency(\.validator) var validator
     
     public struct State: Equatable {
         let id: UUID = .init()
@@ -69,7 +72,7 @@ extension ProfileEditCore {
         
         if text.count > 0 {
             _infos[0].status = self.isValidCharacter(text) ? .success : .failure
-            _infos[1].status = self.isValidSpecial(text) ? .failure : .success
+            _infos[1].status = self.validator.isValidSpecial(text) ? .failure : .success
             _infos[2].status = text.count < 11 ? .success : .failure
         } else {
             _infos.indices.forEach { _infos[$0].status = .default }
@@ -79,22 +82,10 @@ extension ProfileEditCore {
     }
     
     private func isValidCharacter(_ text: String) -> Bool {
-        
-        let regExKorean = ".*[가-힣ㄱ-ㅎㅏ-ㅣ].*"
-        let isValidKorean = text.range(of: regExKorean, options: .regularExpression) != nil
-        
-        let regExAlphabet = ".*[a-zA-Z].*"
-        let isValidAlphabet = text.range(of: regExAlphabet, options: .regularExpression) != nil
-        
-        let regExNumeric = ".*[0-9].*"
-        let isValidNumeric = text.range(of: regExNumeric, options: .regularExpression) != nil
+        let isValidKorean = self.validator.isValidKorean(text)
+        let isValidAlphabet = self.validator.isValidAlphabet(text)
+        let isValidNumeric = self.validator.isValidNumeric(text)
         
         return isValidKorean || (isValidAlphabet && isValidNumeric)
-    }
-    
-    private func isValidSpecial(_ text: String) -> Bool {
-        let regExSpecial = ".*[+×÷=_/[/]!@#₩$^&()\\-:;,?`~\\\\|{}.․‘“].*"
-        let isValidSpecial = text.range(of: regExSpecial, options: .regularExpression) != nil
-        return isValidSpecial
     }
 }
