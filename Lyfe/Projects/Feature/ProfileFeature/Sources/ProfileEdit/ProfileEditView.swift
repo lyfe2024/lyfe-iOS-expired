@@ -58,11 +58,7 @@ struct ProfileEditView: View {
                 ),
                 placeholder: "닉네임을 입력해주세요.",
                 focusState: self._focusState,
-                validList: [
-                    .init(status: .success, text: "1"),
-                    .init(status: .default, text: "2"),
-                    .init(status: .failure, text: "3"),
-                ]
+                validList: self.store.withState(\.validInfos)
             )
             
             Spacer()
@@ -102,6 +98,9 @@ struct ProfileEditView: View {
         )
         .background(Color.white)
         .ignoresSafeArea(edges: .bottom)
+        .task {
+            self.store.send(.onAppear)
+        }
     }
 }
 
