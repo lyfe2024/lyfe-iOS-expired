@@ -9,8 +9,8 @@
 import Foundation
 
 public struct ValidInfo: Hashable, Equatable {
-    var status: ViewStatus
-    var text: String
+    public var status: ViewStatus
+    public var text: String
     
     public init(status: ViewStatus, text: String) {
         self.status = status

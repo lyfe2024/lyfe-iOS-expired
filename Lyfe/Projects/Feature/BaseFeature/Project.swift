@@ -11,6 +11,7 @@ let project = Project.module(
         .implements(module: .feature(.BaseFeature), dependencies: [
             .feature(target: .BaseFeature, type: .interface),
             .userInterface(target: .DesignSystem),
+            .core(target: .CoreKit),
             .shared(target: .GlobalThirdPartyLibrary),
         ]),
         .tests(module: .feature(.BaseFeature), dependencies: [
