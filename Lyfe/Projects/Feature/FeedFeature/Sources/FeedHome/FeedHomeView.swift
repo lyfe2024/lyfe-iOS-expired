@@ -9,6 +9,7 @@
 import SwiftUI
 import DesignSystem
 
+
 enum FeedTap: String, CaseIterable {
     case new = "최신"
     case popular = "인기"
@@ -16,21 +17,50 @@ enum FeedTap: String, CaseIterable {
 
 struct FeedHomeView: View {
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
+            HStack() {
+                Text("피드")
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundColor(.black)
+                
+                Spacer()
+                
+                Button {
+                } label: {
+                    // Button/B1
+                    Text("사진 신청")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(R.Color.mainOrange500)
+                }
+
+            }
             FeedTabView()
-        }.padding(.horizontal, 20)
+                
+        }
+        .padding(.horizontal, 20)
     }
 }
 
 struct detailView: View {
+    
+    var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     var feedTabs: FeedTap
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             switch feedTabs {
             case .new:
-                Text("최신")
+                LazyVGrid(columns: columns) {
+                        ForEach((0...19), id: \.self) { _ in
+                            FeedGridItem()
+                        }
+                    }
+
             case .popular:
-                Text("인기")
+                LazyVGrid(columns: columns) {
+                        ForEach((0...19), id: \.self) { _ in
+                            FeedGridItem()
+                        }
+                    }
             }
         }
     }
