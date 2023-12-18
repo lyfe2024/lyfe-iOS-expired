@@ -37,6 +37,7 @@ public extension ModulePaths {
     enum Domain: String, MicroTargetPathConvertable {
         case BaseDomain
         case BoardDomain
+        case UserDomain
     }
 }
 
