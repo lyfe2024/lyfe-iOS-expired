@@ -2,8 +2,8 @@ import Foundation
 
 // MARK: - Picture
 public struct Picture: Decodable {
-    public let height, width: Int
-    public let pictureURL: String
+    public var height, width: Int
+    public var pictureURL: String
     
     enum CodingKeys: String, CodingKey {
         case height, width

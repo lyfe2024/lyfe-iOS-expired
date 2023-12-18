@@ -3,9 +3,9 @@ import Foundation
 // MARK: - BoardPictureList
 public struct BoardPictureList: Decodable {
     public let id: Int
-    public let title: String
-    public let picture: Picture
-    public let date, boardType: String
-    public let user: User
-    public let whiskyCount, commentCount: Int
+    public var title: String
+    public var picture: Picture
+    public var date, boardType: String
+    public var user: User
+    public var whiskyCount, commentCount: Int
 }
