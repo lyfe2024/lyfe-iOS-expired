@@ -1,4 +1,7 @@
 import UIKit
+import FeedFeatureInterface
+import SwiftUI
+import FeedFeature
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,11 +12,17 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .yellow
-        window?.rootViewController = viewController
+        let splashView = FeedCoordinatorView(
+            store: .init(
+                initialState: FeedCoordinator.State.init()
+            ) {
+                FeedCoordinator()
+            }
+        )
+        window?.rootViewController = UIHostingController(rootView: splashView)
         window?.makeKeyAndVisible()
-
+        
+        
         return true
     }
 }
