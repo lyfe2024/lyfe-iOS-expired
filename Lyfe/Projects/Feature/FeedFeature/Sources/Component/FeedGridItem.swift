@@ -28,12 +28,13 @@ struct FeedGridItem: View {
                 }
                 Spacer()
                 
-                Text("사진 제목 텍스트\n두줄까지 들어가고 넘어가는건")
+                Text("사진 제목 텍스트 두줄까지 들어가고 넘어가는건")
                   .font(
                     Font.custom("Pretendard", size: 14)
                       .weight(.bold)
                   )
                   .foregroundColor(.white)
+                  .lineLimit(2)
                   .frame(width: 136, alignment: .topLeading)
             }
             .padding(10)
