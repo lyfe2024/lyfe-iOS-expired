@@ -1,115 +1,50 @@
-//
-//  NicknameView.swift
-//  LoginFeature
-//
-//  Created by 유상 on 11/4/23.
-//  Copyright © 2023 com.lyfe.lyfe. All rights reserved.
-//
-
 import SwiftUI
 import ComposableArchitecture
 import DesignSystem
 
 struct NicknameView: View {
     let store: StoreOf<NicknameCore>
+
+    @FocusState var focusState: FocusField?
     
     init(store: StoreOf<NicknameCore>) {
         self.store = store
     }
     
+    
     var body: some View {
-        VStack(alignment: .center, spacing: 0) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("닉네임 설정")
-                            .font(.system(size: 24, weight: .bold))
+        VStack(alignment: .center, spacing: 40) {
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("닉네임 설정")
+                        .font(.system(size: 24, weight: .bold))
 
-                        Text("원하는 닉네임을 설정해주세요.")
-                            .font(.system(size: 14, weight: .bold))
-                    }
-                    Spacer()
+                    Text("원하는 닉네임을 설정해주세요.")
+                        .font(.system(size: 14, weight: .bold))
                 }
-
-                ZStack {
-                    TextField("placeholder", text: .init(
-                        get: { self.store.withState(\.name) },
-                        set: { self.store.send(.binding(.set(\.$name, $0))) }
-                    ))
-                    .frame( height: 48)
-                    .padding(.leading, 12)
-                    .cornerRadius(8)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .inset(by: 0.5)
-                            .stroke(store.withState(\.isInput) ? Color.black : R.Color.grey200, lineWidth: 1)
-                    )
-                    
-                    HStack() {
-                        Spacer()
-                        
-                        Button {
-                            self.store.send(.clear)
-                        } label: {
-                            R.Common.cancelMark
-                                .resizable()
-                                .frame(width: 32, height: 32)
-                        }
-                        .padding(.trailing, 8)
-                        .opacity(self.store.withState(\.isInput) ? 1 : 0)
-                    }
-                }
-                .padding(.top, 72)
+                Spacer()
+            }
             
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 12) {
-                    R.Common.checkMark
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(store.withState(\.isEnableFirst) ? R.Color.black : R.Color.grey200)
-                    
-                    Text("영문/한글 + 숫자조합")
-                        .font(Font.system(size: 14))
-                        .foregroundColor(store.withState(\.isEnableFirst) ? R.Color.black : R.Color.grey200)
-                    
-                    Spacer()
-                }
-                
-                HStack(spacing: 12) {
-                    R.Common.checkMark
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(store.withState(\.isEnableSecond) ? R.Color.black : R.Color.grey200)
-                    
-                    Text("특수문자 사용 X")
-                        .font(Font.system(size: 14))
-                        .foregroundColor(store.withState(\.isEnableSecond) ? R.Color.black : R.Color.grey200)
-                    
-                    Spacer()
-                }
-                
-                HStack(spacing: 12) {
-                    R.Common.checkMark
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(store.withState(\.isEnableThird) ? R.Color.black : R.Color.grey200)
-                    
-                    Text("최대 10글자")
-                        .font(Font.system(size: 14))
-                        .foregroundColor(store.withState(\.isEnableThird) ? R.Color.black : R.Color.grey200)
-                    
-                    Spacer()
-                }
-            }.padding(.top, 9)
+            
+            NicknameSection(
+                text: .init(
+                    get: { self.store.withState(\.nickname) },
+                    set: { self.store.send(.binding(.set(\.$nickname, $0))) }
+                ),
+                placeholder: "닉네임을 입력해주세요.",
+                focusState: self._focusState,
+                validList: self.store.withState(\.validInfos)
+            )
             
             Spacer()
             
             Button {
-                            
+                
             } label: {
-                Text("다음")
+                Text("완료")
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(
-                        self.store.withState(\.isEnableDoneButton)
+                        self.store.withState(\.isEnabledDoneButton)
                         ? Color.white
                         : R.Color.grey300
                     )
@@ -119,20 +54,52 @@ struct NicknameView: View {
             }
             .frame(maxWidth: .infinity)
             .background(
-                self.store.withState(\.isEnableDoneButton)
-                ? Color.black
+                self.store.withState(\.isEnabledDoneButton)
+                ? R.Color.mainOrange500
                 : R.Color.grey100
             )
             .cornerRadius(10)
             .padding(.bottom, 40)
         }
         .padding(.horizontal, 20)
-        .topBar(leftView: {
-            Button {
-                store.send(.dismiss)
-            } label: {
-                R.Common.arrowBack
+        .topBar(
+            leftView: {
+                Button {
+                    self.store.send(.dismiss)
+                } label: {
+                    R.Common.arrowBack
+                }
             }
-        })
+        )
+        .background(Color.white)
+        .ignoresSafeArea(edges: .bottom)
+        .task {
+            self.store.send(.onAppear)
+        }
+        
+    }
+}
+
+
+extension NicknameView {
+    
+    struct NicknameSection: View {
+        @Binding var text: String
+        var placeholder: String
+        @FocusState var focusState: FocusField?
+        
+        var validList: [ValidInfo]
+        
+        var body: some View {
+            VStack(spacing: 8) {
+                DefaultTextField(
+                    text: self.$text,
+                    placeholder: self.placeholder,
+                    focusState: self._focusState
+                )
+                
+                ValidationView(list: self.validList)
+            }
+        }
     }
 }
