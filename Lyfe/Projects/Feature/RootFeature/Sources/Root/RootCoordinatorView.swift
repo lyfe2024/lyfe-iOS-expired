@@ -42,6 +42,8 @@ public struct RootCoordinatorView: View {
                         } label: {
                             Text("Success Toast")
                         }
+                        
+                        Spacer()
                     }
                     .tag(Constant.Tab.home)
                 case .feed:
@@ -61,9 +63,11 @@ public struct RootCoordinatorView: View {
                         .tag(Constant.Tab.profile)
                 }
                 
+                
+            }
+            .frame(maxWidth: .infinity)
+            .overlay(alignment: .bottom) {
                 if self.showTabBar(viewStore.selectedTab) {
-                    Spacer()
-                    
                     BottomTabBar(selectedTab: viewStore.binding(
                         get: { $0.selectedTab },
                         send: RootCoordinator.Action.tabSelected
