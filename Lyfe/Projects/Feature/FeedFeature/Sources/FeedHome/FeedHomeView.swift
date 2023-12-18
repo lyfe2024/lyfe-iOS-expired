@@ -8,6 +8,7 @@
 
 import SwiftUI
 import DesignSystem
+import ComposableArchitecture
 
 
 enum FeedTap: String, CaseIterable {
@@ -16,6 +17,13 @@ enum FeedTap: String, CaseIterable {
 }
 
 struct FeedHomeView: View {
+    let store: StoreOf<FeedHomeCore>
+    
+    init(store: StoreOf<FeedHomeCore>) {
+        self.store = store
+    }
+    
+    
     var body: some View {
         VStack(spacing: 10) {
             HStack() {
@@ -26,6 +34,7 @@ struct FeedHomeView: View {
                 Spacer()
                 
                 Button {
+                    store.send(.photoRequest)
                 } label: {
                     // Button/B1
                     Text("사진 신청")
@@ -34,7 +43,7 @@ struct FeedHomeView: View {
                 }
 
             }
-            FeedTabView()
+            FeedTabView(store: self.store)
                 
         }
         .padding(.horizontal, 20)
@@ -43,24 +52,32 @@ struct FeedHomeView: View {
 
 struct detailView: View {
     
+    let store: StoreOf<FeedHomeCore>
+    
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     var feedTabs: FeedTap
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             switch feedTabs {
             case .new:
-                LazyVGrid(columns: columns) {
+                LazyVGrid(columns: columns, spacing: 12) {
                         ForEach((0...19), id: \.self) { _ in
                             FeedGridItem()
+                                .onTapGesture {
+                                    store.send(.moveToDetail)
+                                }
                         }
                     }
 
             case .popular:
-                LazyVGrid(columns: columns) {
+                LazyVGrid(columns: columns,spacing: 12) {
                         ForEach((0...19), id: \.self) { _ in
                             FeedGridItem()
+                                .onTapGesture {
+                                    store.send(.moveToDetail)
+                                }
                         }
-                    }
+                }
             }
         }
     }
@@ -69,6 +86,7 @@ struct detailView: View {
 
 
 struct FeedTabView: View {
+    let store: StoreOf<FeedHomeCore>
     
     @State private var selectedPicker: FeedTap = .new
     @Namespace private var animation
@@ -76,7 +94,7 @@ struct FeedTabView: View {
     var body: some View {
         VStack {
             animate()
-            detailView(feedTabs: selectedPicker)
+            detailView(store: self.store, feedTabs: selectedPicker)
         }
     }
     
@@ -109,8 +127,4 @@ struct FeedTabView: View {
             }
         }
     }
-}
-
-#Preview {
-    FeedHomeView()
 }
