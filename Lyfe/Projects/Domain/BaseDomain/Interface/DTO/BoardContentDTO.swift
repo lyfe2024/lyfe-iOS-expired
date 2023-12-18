@@ -1,7 +1,7 @@
 import Foundation
 
-// MARK: - BoardContentList
-public struct BoardContentList: Decodable {
+// MARK: - BoardContent
+public struct BoardContent: Decodable {
     public let id: Int
     public var title, content: String
     public var boardType: BoardType

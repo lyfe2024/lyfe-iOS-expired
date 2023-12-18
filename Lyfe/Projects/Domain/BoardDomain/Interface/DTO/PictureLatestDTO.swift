@@ -7,7 +7,7 @@ extension BoardsDTO {
 
 extension BoardsDTO.Picture {
     public struct LatestResponse: Decodable {
-        public var result: [BoardPictureList]
+        public var result: [BoardPicture]
         public var page: Page
     }
 }
