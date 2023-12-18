@@ -1,4 +1,5 @@
 import Foundation
+import BaseDomainInterface
 
 extension BoardsDTO {
     public enum Write {}

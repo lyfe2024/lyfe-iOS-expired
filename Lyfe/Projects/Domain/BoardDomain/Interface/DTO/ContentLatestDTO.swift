@@ -7,7 +7,7 @@ extension BoardsDTO {
 
 extension BoardsDTO.Content {
     public struct LatestResponse: Decodable {
-        public var result: [BoardContentList]
+        public var result: [BoardContent]
         public var page: Page
     }
 }

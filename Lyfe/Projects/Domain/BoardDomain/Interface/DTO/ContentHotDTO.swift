@@ -3,7 +3,7 @@ import BaseDomainInterface
 
 extension BoardsDTO.Content {
     public struct HotResponse: Decodable {
-        public var result: [BoardContentList]
+        public var result: [BoardContent]
         public var page: Page
     }
 }
