@@ -1,6 +1,7 @@
 import Foundation
 import NetworkingInterface
 import BoardDomainInterface
+import BaseDomainInterface
 import Dependencies
 
 public struct BoardClient: BoardRepository {
@@ -10,8 +11,8 @@ public struct BoardClient: BoardRepository {
     public var contentHot: @Sendable () async throws -> BoardsDTO.Content.HotResponse
     
     public var detail: @Sendable (_ id: Int) async throws -> BoardsDTO.DetailResponse
-    public var write: @Sendable (_ param: BoardsDTO.Write.Request) async throws -> BoardsDTO.Write.Response
-    public var update: @Sendable (_ id: Int, _ param: BoardsDTO.Update.Request) async throws -> BoardsDTO.Update.Response
+    public var write: @Sendable (_ param: BoardsDTO.Write.Request) async throws -> CommonDTO.Response
+    public var update: @Sendable (_ id: Int, _ param: BoardsDTO.Update.Request) async throws -> CommonDTO.Response
     
     public var list: @Sendable (_ id: Int) async throws -> BoardsDTO.List.Response
 }
@@ -52,13 +53,13 @@ extension BoardClient: DependencyKey {
         write: { param in
             return try await APIClient().asyncRequest(
                 endpoint: BoardEndPoint.write(param),
-                responseModel: BoardsDTO.Write.Response.self
+                responseModel: CommonDTO.Response.self
             )
         }, 
         update: { id, param in
             return try await APIClient().asyncRequest(
                 endpoint: BoardEndPoint.update(id: id, param: param),
-                responseModel: BoardsDTO.Update.Response.self
+                responseModel: CommonDTO.Response.self
             )
         },
         list: { id in

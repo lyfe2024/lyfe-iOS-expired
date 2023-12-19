@@ -1,25 +1,24 @@
+
 import Foundation
 
-extension BoardsDTO {
-    public enum Update {}
+extension CommentsDTO {
+    public enum Create {}
 }
 
 
-// MARK: - Request
-extension BoardsDTO.Update {
+extension CommentsDTO.Create {
+    // MARK: - Request
     public struct Request: Encodable {
-        public var title: String
+        public var boardID: Int
         public var content: String
     }
-}
-
-// MARK: - Response
-//extension BoardsDTO.Update {
+    
+    // MARK: - Response
 //    public struct Response: Decodable {
-//        public let result: Result
+//        public let result: [Result]
 //    }
 //
 //    public struct Result: Decodable {
 //        public let id: Int
 //    }
-//}
+}
