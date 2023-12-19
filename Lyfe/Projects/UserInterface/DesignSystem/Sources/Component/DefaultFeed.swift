@@ -7,10 +7,13 @@
 //
 
 import SwiftUI
-import DesignSystem
 
-struct FeedGridItem: View {
-    var body: some View {
+public struct DefaultFeed: View {
+    public init() {
+        
+    }
+    
+    public var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             VStack(alignment: .leading) {
                 HStack(spacing: 4) {
@@ -72,6 +75,3 @@ struct FeedGridItem: View {
     }
 }
 
-#Preview {
-    FeedGridItem()
-}

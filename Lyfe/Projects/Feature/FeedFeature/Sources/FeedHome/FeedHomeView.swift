@@ -62,7 +62,7 @@ struct detailView: View {
             case .new:
                 LazyVGrid(columns: columns, spacing: 12) {
                         ForEach((0...19), id: \.self) { _ in
-                            FeedGridItem()
+                            DefaultFeed()
                                 .onTapGesture {
                                     store.send(.moveToDetail)
                                 }
@@ -72,7 +72,7 @@ struct detailView: View {
             case .popular:
                 LazyVGrid(columns: columns,spacing: 12) {
                         ForEach((0...19), id: \.self) { _ in
-                            FeedGridItem()
+                            DefaultFeed()
                                 .onTapGesture {
                                     store.send(.moveToDetail)
                                 }
