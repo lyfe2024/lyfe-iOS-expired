@@ -38,6 +38,7 @@ public extension ModulePaths {
         case BaseDomain
         case BoardDomain
         case UserDomain
+        case CommentDomain
     }
 }
 
