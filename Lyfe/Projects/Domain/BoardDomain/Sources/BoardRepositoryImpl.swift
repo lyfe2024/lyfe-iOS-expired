@@ -15,6 +15,7 @@ public struct BoardClient: BoardRepository {
     public var update: @Sendable (_ id: Int, _ param: BoardsDTO.Update.Request) async throws -> CommonDTO.Response
     
     public var list: @Sendable (_ id: Int) async throws -> BoardsDTO.List.Response
+    public var like: @Sendable (_ id: Int) async throws -> CommonDTO.Response
 }
 
 
@@ -66,6 +67,12 @@ extension BoardClient: DependencyKey {
             return try await APIClient().asyncRequest(
                 endpoint: BoardEndPoint.list(id: id, size: 10),
                 responseModel: BoardsDTO.List.Response.self
+            )
+        },
+        like: { id in
+            return try await APIClient().asyncRequest(
+                endpoint: BoardEndPoint.like(id: id),
+                responseModel: CommonDTO.Response.self
             )
         }
     )

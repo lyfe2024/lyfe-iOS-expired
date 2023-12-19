@@ -14,6 +14,8 @@ public enum BoardEndPoint {
     case update(id: Int, param: BoardsDTO.Update.Request) // 글 업데이트
     
     case list(id: Int, size: Int) // 글 리스트 조회
+    
+    case like(id: Int) // 신청 사진, 고민글 좋아요
 }
 
 extension BoardEndPoint: EndPointProvider {
@@ -35,6 +37,7 @@ extension BoardEndPoint: EndPointProvider {
         case .write: return ""
         case .update(let id, _): return "\(id)"
         case .list(let id, let size): return ""
+        case .like(let id): return "\(id)/like"
         }
     }
     
@@ -42,6 +45,7 @@ extension BoardEndPoint: EndPointProvider {
         switch self {
         case .write: return .post
         case .update: return .put
+        case .like: return .patch
         default: return .get
         }
     }
