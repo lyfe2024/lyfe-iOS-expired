@@ -2,14 +2,14 @@
 import Foundation
 
 extension CommentsDTO {
-    public enum Update {}
+    public enum Create {}
 }
 
 
-extension CommentsDTO.Update {
+extension CommentsDTO.Create {
     // MARK: - Request
     public struct Request: Decodable {
-        public let commentID: Int
+        public var boardID: Int
         public var content: String
     }
     

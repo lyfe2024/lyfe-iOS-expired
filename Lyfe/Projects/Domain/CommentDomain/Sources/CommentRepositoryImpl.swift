@@ -6,10 +6,8 @@ import Dependencies
 
 public struct CommentClient: CommentRepository {
     public var list: @Sendable (_ boardID: Int, _ cursorID: Int) async throws -> CommentsDTO.List.Response
-    
-    public var update: @Sendable (_ id: Int, _ content: String) async throws -> CommentsDTO.Update.Response
-    
-    
+    public var update: @Sendable (_ param: CommentsDTO.Update.Request) async throws -> CommentsDTO.Update.Response
+    public var create: @Sendable (_ param: CommentsDTO.Create.Request) async throws -> CommentsDTO.Create.Response
 }
 
 
@@ -21,12 +19,17 @@ extension CommentClient: DependencyKey {
                 responseModel: CommentsDTO.List.Response.self
             )
         },
-        update: { id, content in
+        update: { param in
             return try await APIClient().asyncRequest(
-                endpoint: CommentEndPoint.update(id: id, content: content),
+                endpoint: CommentEndPoint.update(param: param),
                 responseModel: CommentsDTO.Update.Response.self
             )
+        },
+        create: { param in
+            return try await APIClient().asyncRequest(
+                endpoint: CommentEndPoint.create(param: param),
+                responseModel: CommentsDTO.Create.Response.self
+            )
         }
-        
     )
 }

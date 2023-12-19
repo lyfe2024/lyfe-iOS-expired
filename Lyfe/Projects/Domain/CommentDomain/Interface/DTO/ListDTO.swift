@@ -6,7 +6,7 @@ extension CommentsDTO {
     public enum List {}
 }
 
-// MARK: - Response
+
 extension CommentsDTO.List {
     public struct Response: Decodable {
         public let result: [Result]
