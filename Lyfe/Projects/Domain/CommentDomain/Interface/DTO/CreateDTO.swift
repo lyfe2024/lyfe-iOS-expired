@@ -8,7 +8,7 @@ extension CommentsDTO {
 
 extension CommentsDTO.Create {
     // MARK: - Request
-    public struct Request: Decodable {
+    public struct Request: Encodable {
         public var boardID: Int
         public var content: String
     }

@@ -8,7 +8,7 @@ extension CommentsDTO {
 
 extension CommentsDTO.Update {
     // MARK: - Request
-    public struct Request: Decodable {
+    public struct Request: Encodable {
         public let commentID: Int
         public var content: String
     }
