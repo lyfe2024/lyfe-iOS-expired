@@ -5,6 +5,7 @@ import Foundation
 
 public enum CommentEndPoint {
     case list(boardID: Int, cursorID: Int) // 댓글 조회
+    case update(id: Int, content: String) // 댓글 수정
 }
 
 extension CommentEndPoint: EndPointProvider {
@@ -19,11 +20,13 @@ extension CommentEndPoint: EndPointProvider {
     public var path: String {
         switch self {
         case .list: return "latest"
+        case .update(let id, _): return "\(id)"
         }
     }
     
     public var method: RequestMethod {
         switch self {
+        case .update: return .put
         default: return .get
         }
     }
@@ -45,6 +48,10 @@ extension CommentEndPoint: EndPointProvider {
     
     public var body: [String : Any]? {
         switch self {
+        case .update(_, let content):
+            return [
+                "content": content
+            ]
         default: return nil
         }
     }
