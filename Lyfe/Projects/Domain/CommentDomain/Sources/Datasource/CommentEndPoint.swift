@@ -4,7 +4,7 @@ import CommentDomainInterface
 import Foundation
 
 public enum CommentEndPoint {
-    
+    case list(boardID: Int, cursorID: Int) // 댓글 조회
 }
 
 extension CommentEndPoint: EndPointProvider {
@@ -18,6 +18,7 @@ extension CommentEndPoint: EndPointProvider {
     
     public var path: String {
         switch self {
+        case .list: return "latest"
         }
     }
     
@@ -33,6 +34,11 @@ extension CommentEndPoint: EndPointProvider {
     
     public var queryItems: [URLQueryItem]? {
         switch self {
+        case .list(let boardID, let cursorID):
+            return [
+                .init(name: "comment_board_id", value: String(boardID)),
+                .init(name: "cursorId", value: String(cursorID)),
+            ]
         default: return nil
         }
     }
