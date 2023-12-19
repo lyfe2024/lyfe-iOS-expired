@@ -18,12 +18,12 @@ extension BoardsDTO.Write {
 }
 
 // MARK: - Response
-extension BoardsDTO.Write {
-    public struct Response: Decodable {
-        public let result: Result
-    }
-
-    public struct Result: Decodable {
-        public let id: Int
-    }
-}
+//extension BoardsDTO.Write {
+//    public struct Response: Decodable {
+//        public let result: Result
+//    }
+//
+//    public struct Result: Decodable {
+//        public let id: Int
+//    }
+//}

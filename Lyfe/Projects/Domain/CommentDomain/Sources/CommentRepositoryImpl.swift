@@ -2,12 +2,13 @@
 import Foundation
 import NetworkingInterface
 import CommentDomainInterface
+import BaseDomainInterface
 import Dependencies
 
 public struct CommentClient: CommentRepository {
     public var list: @Sendable (_ boardID: Int, _ cursorID: Int) async throws -> CommentsDTO.List.Response
-    public var update: @Sendable (_ param: CommentsDTO.Update.Request) async throws -> CommentsDTO.Update.Response
-    public var create: @Sendable (_ param: CommentsDTO.Create.Request) async throws -> CommentsDTO.Create.Response
+    public var update: @Sendable (_ param: CommentsDTO.Update.Request) async throws -> CommonDTO.Response
+    public var create: @Sendable (_ param: CommentsDTO.Create.Request) async throws -> CommonDTO.Response
 }
 
 
@@ -22,13 +23,13 @@ extension CommentClient: DependencyKey {
         update: { param in
             return try await APIClient().asyncRequest(
                 endpoint: CommentEndPoint.update(param: param),
-                responseModel: CommentsDTO.Update.Response.self
+                responseModel: CommonDTO.Response.self
             )
         },
         create: { param in
             return try await APIClient().asyncRequest(
                 endpoint: CommentEndPoint.create(param: param),
-                responseModel: CommentsDTO.Create.Response.self
+                responseModel: CommonDTO.Response.self
             )
         }
     )

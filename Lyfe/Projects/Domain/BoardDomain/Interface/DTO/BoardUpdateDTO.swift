@@ -14,12 +14,12 @@ extension BoardsDTO.Update {
 }
 
 // MARK: - Response
-extension BoardsDTO.Update {
-    public struct Response: Decodable {
-        public let result: Result
-    }
-
-    public struct Result: Decodable {
-        public let id: Int
-    }
-}
+//extension BoardsDTO.Update {
+//    public struct Response: Decodable {
+//        public let result: Result
+//    }
+//
+//    public struct Result: Decodable {
+//        public let id: Int
+//    }
+//}
