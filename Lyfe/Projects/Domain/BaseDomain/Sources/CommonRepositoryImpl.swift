@@ -5,7 +5,7 @@ import Dependencies
 
 public struct CommonClient: CommonRepository {
     public var uploadImage: @Sendable (CommonDTO.UploadImage.Request) async throws -> CommonDTO.UploadImage.Response
-    public var topics: @Sendable () async throws -> TopicsDTO.Response
+    public var topics: @Sendable (_ date: String?) async throws -> TopicsDTO.Response
 }
 
 
@@ -17,9 +17,9 @@ extension CommonClient: DependencyKey {
                 responseModel: CommonDTO.UploadImage.Response.self
             )
         },
-        topics: {
+        topics: { date in
             return try await APIClient().asyncRequest(
-                endpoint: CommonEndPoint.topcis,
+                endpoint: CommonEndPoint.topcis(date: date),
                 responseModel: TopicsDTO.Response.self
             )
         }

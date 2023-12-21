@@ -4,7 +4,7 @@ import Foundation
 
 public enum CommonEndPoint {
     case uploadImage(CommonDTO.UploadImage.Request) // 이미지 업로드
-    case topcis // 오늘의 주제
+    case topcis(date: String?) // 오늘의 주제
 }
 
 extension CommonEndPoint: EndPointProvider {
@@ -19,7 +19,9 @@ extension CommonEndPoint: EndPointProvider {
     public var path: String {
         switch self {
         case .uploadImage: return "images/get-upload-url"
-        case .topcis: return "topics"
+        case .topcis(var date):
+            date = date != nil ? "/\(String(describing: date))" : ""
+            return "topics" + (date ?? "")
         }
     }
     
