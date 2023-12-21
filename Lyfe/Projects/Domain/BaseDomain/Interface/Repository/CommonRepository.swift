@@ -5,4 +5,5 @@ public protocol CommonRepository {
     CommonDTO.UploadImage.Response { get }
     var topics: @Sendable (_ date: String?) async throws ->
     TopicsDTO.Response { get }
+    var notifications: @Sendable () async throws -> NotificationsDTO.Response { get }
 }
