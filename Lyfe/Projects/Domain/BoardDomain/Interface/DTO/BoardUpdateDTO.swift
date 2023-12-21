@@ -10,6 +10,11 @@ extension BoardsDTO.Update {
     public struct Request: Encodable {
         public var title: String
         public var content: String
+        
+        public init(title: String, content: String) {
+            self.title = title
+            self.content = content
+        }
     }
 }
 

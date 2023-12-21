@@ -14,6 +14,20 @@ extension BoardsDTO.Write {
         public var boardType: BoardType
         public var userID: Int
         public var topicID: Int
+        
+        public init(
+            title: String,
+            content: String,
+            boardType: BoardType,
+            userID: Int,
+            topicID: Int
+        ) {
+            self.title = title
+            self.content = content
+            self.boardType = boardType
+            self.userID = userID
+            self.topicID = topicID
+        }
     }
 }
 

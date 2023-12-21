@@ -42,8 +42,12 @@ public struct MultipartRequest {
     var length: UInt64 {
         return UInt64(httpBody.count)
     }
+    
+    public init(data: NSMutableData = NSMutableData()) {
+        self.data = data
+    }
 
-    func append(fileString: String, withName name: String) {
+    public func append(fileString: String, withName name: String) {
         data.append(topBoundry)
         data.append(separator)
         data.append(contentDisposition(name, fileName: nil))
@@ -53,7 +57,7 @@ public struct MultipartRequest {
         data.append(separator)
     }
 
-    func append(fileData: Data, withName name: String, fileName: String?, mimeType: FileType?) {
+    public func append(fileData: Data, withName name: String, fileName: String?, mimeType: FileType?) {
         data.append(topBoundry)
         data.append(separator)
         data.append(contentDisposition(name, fileName: fileName))
@@ -66,7 +70,7 @@ public struct MultipartRequest {
         data.append(separator)
     }
 
-    func append(fileURL: URL, withName name: String) {
+    public func append(fileURL: URL, withName name: String) {
         guard let fileData = try? Data(contentsOf: fileURL) else {
             return
         }
@@ -92,26 +96,12 @@ import MobileCoreServices
 extension MultipartRequest {
 
     private func mimeType(for pathExtension: String) -> String {
-        if #available(iOS 14, macOS 11, tvOS 14, watchOS 7, *) {
-            return UTType(filenameExtension: pathExtension)?.preferredMIMEType ?? "application/octet-stream"
-        } else {
-            if
-                let id = UTTypeCreatePreferredIdentifierForTag(
-                    kUTTagClassFilenameExtension,
-                    pathExtension as CFString,
-                    nil
-                )?.takeRetainedValue(),
-                let contentType = UTTypeCopyPreferredTagWithClass(id, kUTTagClassMIMEType)?.takeRetainedValue() {
-                return contentType as String
-            }
-
-            return "application/octet-stream"
-        }
+        return UTType(filenameExtension: pathExtension)?.preferredMIMEType ?? "application/octet-stream"
     }
 }
 
 extension NSMutableData {
-    func append(_ string: String, encoding: String.Encoding = .utf8) {
+    public func append(_ string: String, encoding: String.Encoding = .utf8) {
         if let data = string.data(using: encoding) {
             self.append(data)
         }
