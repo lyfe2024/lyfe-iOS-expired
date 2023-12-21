@@ -6,4 +6,6 @@ public protocol CommonRepository {
     var topics: @Sendable (_ date: String?) async throws ->
     TopicsDTO.Response { get }
     var notifications: @Sendable () async throws -> NotificationsDTO.Response { get }
+    var policyTerm: @Sendable () async throws -> PolicysDTO.Response { get }
+    var policyPersonalInfoAgreement: @Sendable () async throws -> PolicysDTO.Response { get }
 }

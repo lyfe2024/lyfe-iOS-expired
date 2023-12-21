@@ -6,6 +6,8 @@ public enum CommonEndPoint {
     case uploadImage(CommonDTO.UploadImage.Request) // 이미지 업로드
     case topcis(date: String?) // 오늘의 주제, 과거 주제 조회
     case notifications // 알림 조회
+    case policyTerm // 이용 약관 조회
+    case policyPersonalInfoAgreement // 개인정보수집동의조회
 }
 
 extension CommonEndPoint: EndPointProvider {
@@ -24,6 +26,8 @@ extension CommonEndPoint: EndPointProvider {
             date = date != nil ? "/\(String(describing: date))" : ""
             return "topics" + (date ?? "")
         case .notifications: return "notifications"
+        case .policyTerm: return "policys/TERM"
+        case .policyPersonalInfoAgreement: return "policys/PERSONAL_INFO_AGREEMENT"
         }
     }
     
