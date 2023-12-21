@@ -3,7 +3,8 @@ import BaseDomainInterface
 import Foundation
 
 public enum CommonEndPoint {
-    case uploadImage(CommonDTO.UploadImage.Request) // 업데이트 예정
+    case uploadImage(CommonDTO.UploadImage.Request) // 이미지 업로드
+    case topcis // 오늘의 주제
 }
 
 extension CommonEndPoint: EndPointProvider {
@@ -18,10 +19,11 @@ extension CommonEndPoint: EndPointProvider {
     public var path: String {
         switch self {
         case .uploadImage: return "images/get-upload-url"
+        case .topcis: return "topics"
         }
     }
     
-    public var method: NetworkingInterface.RequestMethod {
+    public var method: RequestMethod {
         switch self {
         default: return .get
         }
@@ -52,7 +54,7 @@ extension CommonEndPoint: EndPointProvider {
         return nil
     }
     
-    public var multipart: NetworkingInterface.MultipartRequest? {
+    public var multipart: MultipartRequest? {
         return nil
     }
     
