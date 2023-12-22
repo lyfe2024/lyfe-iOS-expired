@@ -83,22 +83,43 @@ struct detailView: View {
 //            nonLoginView()
 //        }
         //로그인
-        ScrollView(.vertical, showsIndicators: false) {
-            switch feedTabs {
-            case .photo:
-                LazyVGrid(columns: columns, spacing: 12) {
-                        ForEach((0...19), id: \.self) { _ in
-                            DefaultFeed()
-                        }
-                    }
-            case .text:
+        
+        switch feedTabs {
+        case .photo:
+            ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(columns: columns, spacing: 12) {
                         ForEach((0...19), id: \.self) { _ in
                             DefaultFeed()
                         }
                     }
             }
+        case .text:
+            List {
+                TextFeed()
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(R.Color.grey100)
+                TextFeed()
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(R.Color.grey100)
+                TextFeed()
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(R.Color.grey100)
+                TextFeed()
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(R.Color.grey100)
+                TextFeed()
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(R.Color.grey100)
+                TextFeed()
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(R.Color.grey100)
+                TextFeed()
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(R.Color.grey100)
+            }
+            .listStyle(.plain)
         }
+      
     }
 }
 
