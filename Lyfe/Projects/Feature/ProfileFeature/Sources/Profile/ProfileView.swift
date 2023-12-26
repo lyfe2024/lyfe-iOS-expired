@@ -29,7 +29,7 @@ struct ProfileView: View {
                         .foregroundColor(.black)
                     
                     Button {
-                        
+                        self.store.send(.pushProfileEdit)
                     } label: {
                         Text("프로필 수정")
                             .font(.system(size: 12, weight: .semibold))
