@@ -63,27 +63,12 @@ struct ProfileEditView: View {
             
             Spacer()
             
-            Button {
-                
-            } label: {
-                Text("완료")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(
-                        self.store.withState(\.isEnabledDoneButton)
-                        ? Color.white
-                        : R.Color.grey300
-                    )
-                    .frame(height: 24)
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
-            }
-            .frame(maxWidth: .infinity)
-            .background(
-                self.store.withState(\.isEnabledDoneButton)
-                ? Color.black
-                : R.Color.grey100
+            
+            DefaultButton(
+                text: "완료",
+                isEnabled: self.store.withState(\.isEnabledDoneButton),
+                tapAction: { }
             )
-            .cornerRadius(10)
             .padding(.bottom, 40)
         }
         .padding(.horizontal, 20)
