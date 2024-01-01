@@ -4,7 +4,7 @@ import SwiftUI
 extension View {
     // MARK: frameGetter
     
-    func frameGetter(_ frame: Binding<CGRect>) -> some View {
+    public func frameGetter(_ frame: Binding<CGRect>) -> some View {
         modifier(FrameGetter(frame: frame))
     }
 }
