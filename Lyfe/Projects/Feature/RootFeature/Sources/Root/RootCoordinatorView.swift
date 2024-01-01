@@ -43,6 +43,12 @@ public struct RootCoordinatorView: View {
                             Text("Success Toast")
                         }
                         
+                        Button {
+                            viewStore.send(.testPopupTap)
+                        } label: {
+                            Text("Popup Test")
+                        }
+                        
                         Spacer()
                     }
                     .tag(Constant.Tab.home)
@@ -75,6 +81,11 @@ public struct RootCoordinatorView: View {
                     .padding(.horizontal, 20)
                 }
             }
+            .popup(
+                isPresented: viewStore.$showPopup,
+                onDismiss: { viewStore.send(.offPopup) },
+                store: self.store.scope(state: \.popup, action: { .popup($0) })
+            )
         }
     }
     
