@@ -7,6 +7,10 @@ import ProfileFeature
 public struct RootCoordinator: Reducer {
     public init() {}
     
+    enum PopupID: String {
+        case test
+    }
+    
     public struct State: Equatable {
         public init(splash: SplashCore.State, profile: ProfileCoordinator.State, selectedTab: Constant.Tab) {
             self.splash = splash
@@ -23,8 +27,11 @@ public struct RootCoordinator: Reducer {
         var splash: SplashCore.State
         var profile: ProfileCoordinator.State
         
+        @BindingState var showPopup: Bool = false
+        
         var selectedTab: Constant.Tab
         @BindingState var toast: Toast?
+        var popup: PopupCore.State?
     }
     
     public enum Action: BindableAction, Equatable {
@@ -35,6 +42,9 @@ public struct RootCoordinator: Reducer {
         case tabSelected(Constant.Tab)
         case setToast(ToastStyle)
         case onToast(Toast?)
+        case testPopupTap
+        case offPopup
+        case popup(PopupCore.Action)
         
         case binding(BindingAction<State>)
     }
@@ -70,6 +80,24 @@ public struct RootCoordinator: Reducer {
                     message: "토스트 테스트 메시지",
                     direction: .top
                 )
+            case .testPopupTap:
+                state.popup = .init(
+                    id: PopupID.test.rawValue,
+                    text: "테스트테스트",
+                    ok: .init(text: "확인")
+                )
+                state.showPopup = true
+                return .none
+            case .popup(.ok(let id)):
+                print("id: \(id)")
+                return .send(.offPopup)
+            case .popup(.cancel(let id)):
+                print("id: \(id)")
+                return .send(.offPopup)
+            case .offPopup:
+                state.popup = nil
+                state.showPopup = false
+                return .none
             case .binding:
                 return .none
             }
