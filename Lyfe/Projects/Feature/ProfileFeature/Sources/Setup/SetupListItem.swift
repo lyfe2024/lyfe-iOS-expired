@@ -21,7 +21,6 @@ struct SetupListItem: View {
                 Spacer()
                 
                 R.Common.nextRight
-                    .resizable()
             }.padding(.vertical, 12)
         }
        

@@ -53,7 +53,7 @@ struct ProfileView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
-                    
+                    self.store.send(.pushSetup)
                 }, label: {
                     Text("설정")
                         .font(.system(size: 16, weight: .semibold))

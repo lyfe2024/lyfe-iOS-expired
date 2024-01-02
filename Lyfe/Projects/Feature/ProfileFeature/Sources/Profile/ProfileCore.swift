@@ -13,6 +13,7 @@ public struct ProfileCore: Reducer {
     public enum Action: Equatable {
         case onAppear
         case pushProfileEdit
+        case pushSetup
     }
     
     public var body: some ReducerOf<Self> {
@@ -23,6 +24,8 @@ public struct ProfileCore: Reducer {
             case .pushProfileEdit:
                 // handle by Coordinator
                 print("pushProfileEdit")
+                return .none
+            case .pushSetup:
                 return .none
             }
         }
