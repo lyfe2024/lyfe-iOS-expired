@@ -2,11 +2,17 @@ import ComposableArchitecture
 import DesignSystem
 import CoreKit
 import Foundation
+import UserDomain
+import UserDomainInterface
+import BaseDomain
+import BaseDomainInterface
 
 public struct ProfileEditCore: Reducer {
     public init() {}
     
     @Dependency(\.validator) var validator
+    @Dependency(\.userClient) var userAPI
+    @Dependency(\.commonClient) var commonAPI
     
     public struct State: Equatable {
         let id: UUID = .init()
@@ -19,11 +25,15 @@ public struct ProfileEditCore: Reducer {
         var validInfos: [ValidInfo] = []
     }
     
-    public enum Action: Equatable, BindableAction {
+    public enum Action: BindableAction {
         case onAppear
         case dismiss
         
         case loadProfileImageData(Data?)
+        
+        case doneButtonTap
+        
+        case patchUserInfoResponse(TaskResult<UsersDTO.Me.Response>)
         
         case binding(BindingAction<State>)
     }
@@ -41,6 +51,23 @@ public struct ProfileEditCore: Reducer {
                 
             case .loadProfileImageData(let data):
                 state.profileImageData = data
+                return .none
+                
+            case .doneButtonTap:
+                return .run { [nickname = state.nickname] send in
+                    let uploadImage = try await self.commonAPI.uploadImage(.init(format: "", path: "", image: Data()))
+                    
+                    if let imageURL = uploadImage.result.first?.url {
+                        let updateMe = try await self.userAPI.updateMe(nickname, imageURL)
+                        await send(.patchUserInfoResponse(
+                            await TaskResult { updateMe }
+                        ))
+                    }
+                    
+                }
+            case .patchUserInfoResponse(.success):
+                return .none
+            case .patchUserInfoResponse(.failure):
                 return .none
                 
             case .binding(\.$nickname):

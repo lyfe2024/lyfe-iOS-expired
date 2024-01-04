@@ -46,3 +46,10 @@ extension CommonClient: DependencyKey {
         }
     )
 }
+
+extension DependencyValues {
+    public var commonClient: CommonClient {
+        get { self[CommonClient.self] }
+        set { self[CommonClient.self] = newValue }
+    }
+}

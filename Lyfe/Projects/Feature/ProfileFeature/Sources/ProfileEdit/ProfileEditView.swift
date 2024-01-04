@@ -67,7 +67,7 @@ struct ProfileEditView: View {
             DefaultButton(
                 text: "완료",
                 isEnabled: self.store.withState(\.isEnabledDoneButton),
-                tapAction: { }
+                tapAction: { self.store.send(.doneButtonTap) }
             )
             .padding(.bottom, 40)
         }
