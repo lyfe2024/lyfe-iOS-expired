@@ -6,7 +6,7 @@ import Foundation
 public struct ProfileEditCore: Reducer {
     public init() {}
     
-    @Dependency(\.validator) var validator
+//    @Dependency(\.validator) var validator
     
     public struct State: Equatable {
         let id: UUID = .init()
@@ -71,9 +71,9 @@ extension ProfileEditCore {
         var _infos = infos
         
         if text.count > 0 {
-            _infos[0].status = self.isValidCharacter(text) ? .success : .failure
-            _infos[1].status = self.validator.isValidSpecial(text) ? .failure : .success
-            _infos[2].status = text.count < 11 ? .success : .failure
+//            _infos[0].status = self.isValidCharacter(text) ? .success : .failure
+//            _infos[1].status = self.validator.isValidSpecial(text) ? .failure : .success
+//            _infos[2].status = text.count < 11 ? .success : .failure
         } else {
             _infos.indices.forEach { _infos[$0].status = .default }
         }
@@ -82,10 +82,11 @@ extension ProfileEditCore {
     }
     
     private func isValidCharacter(_ text: String) -> Bool {
-        let isValidKorean = self.validator.isValidKorean(text)
-        let isValidAlphabet = self.validator.isValidAlphabet(text)
-        let isValidNumeric = self.validator.isValidNumeric(text)
-        
-        return isValidKorean || (isValidAlphabet && isValidNumeric)
+//        let isValidKorean = self.validator.isValidKorean(text)
+//        let isValidAlphabet = self.validator.isValidAlphabet(text)
+//        let isValidNumeric = self.validator.isValidNumeric(text)
+//        
+//        return isValidKorean || (isValidAlphabet && isValidNumeric)
+        return true
     }
 }

@@ -27,7 +27,10 @@ public struct ProfileCoordinator: Reducer {
             case .routeAction(_, action: .profile(.pushProfileEdit)):
                 let profileEditState = ProfileEditCore.State.init()
                 state.routes.push(.profileEdit(profileEditState))
-            case .routeAction(_, action: .profileEdit(.dismiss)):
+            case .routeAction(_, action: .profile(.pushSetup)):
+                let setupState = SetupCore.State.init()
+                state.routes.push(.setup(setupState))
+            case .routeAction(_, action: .profileEdit(.dismiss)), .routeAction(_, action: .setup(.dismiss)):
                 state.routes.goBack()
             case .updateRoutes(_):
                 break

@@ -23,7 +23,7 @@ public struct DefaultButton: View {
         Button {
             self.tapAction()
         } label: {
-            Text("완료")
+            Text(text)
                 .font(.system(size: 16, weight: .bold))
                 .foregroundColor(self.textColor)
                 .padding(.horizontal, 24)
